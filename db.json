@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "田中",
+      "email": "tanaka@hogehoge.com",
+      "password":"hogehoge"
+    },
+    {
+      "id": 2,
+      "name": "斉藤",
+      "email": "saitou@hogehoge.com",
+      "password":"hogehoge"
+    }
+  ],
+  "shops": [
+    {
+      "id": 1,
+      "name": "店１",
+      "area_id": 1,
+      "genre_id":1,
+      "description":"これは店１の情報です",
+      "img_url":"shop1.ne.jp"
+    },
+    {
+      "id": 2,
+      "name": "店2",
+      "area_id": 1,
+      "genre_id":2,
+      "description":"これは店2の情報です",
+      "img_url":"shop1.ne.jp"
+    }
+  ],
+  "areas": [
+    {
+      "id":1,
+      "name": "東京都"
+    },
+    {
+      "id":2,
+      "name": "埼玉県"
+    }
+  ],
+  "genres": [
+    {
+      "id":1,
+      "name": "焼肉"
+    },
+    {
+      "id":2,
+      "name": "寿司"
+    }
+  ],
+  "favorites":[
+    {
+      "id":1,
+      "user_id":1,
+      "shop_id":1
+    },
+    {
+      "id":2,
+      "user_id":2,
+      "shop_id":1
+    }
+  ],
+  "reservations":[
+    {
+      "id":1,
+      "num_of_users":10,
+      "date_time":"2021-05-30 18:00:00",
+      "user_id":1,
+      "shop_id":1
+    },
+    {
+      "id":2,
+      "num_of_users":20,
+      "date_time":"2021-05-30 18:00:00",
+      "user_id":2,
+      "shop_id":2
+    }
+  ]
+}
