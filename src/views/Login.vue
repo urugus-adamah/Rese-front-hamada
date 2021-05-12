@@ -1,13 +1,7 @@
 <template>
  <div>
-   <div class="header flex">
-     <div class="left">
-       <img class="logo" src="../../img/Logo.png" alt />
-     </div>
-     <div class="right flex">
-       <p>新規登録</p>
-       <p>ログイン</p>
-     </div>
+   <div class="header">
+       <h1 class="logo">Rese</h1>
    </div>
    <div class="card">
      <p>ログイン</p>
@@ -16,64 +10,82 @@
        <input placeholder="パスワード" type="password" />
        <button>ログイン</button>
      </div>
+      <a href="#">会員登録</a>
    </div>
  </div>
 </template>
-export default {
-  name: 'Home',
-}
+
 <style scoped>
-.right {
-  align-items: center;
-}
-.right p {
-  margin-right: 20px;
-  cursor: pointer;
-}
+
 .header {
-  margin: 20px;
+  height: 90px;
+  width: 100%;
 }
 .logo {
-  width: 150px;
+  display: inline-block;
   cursor: pointer;
+  font-size: 48px;
+  color: #A69159;
+  margin: 25px 0 0 100px;
 }
-.flex {
-  display: flex;
-  justify-content: space-between;
-}
-button {
-  width: 100px;
-  text-align: center;
-  padding: 8px 0 10px;
-  color: #fff;
-  background-color: #5419da;
-  border-radius: 25px;
-  cursor: pointer;
-}
+
 .card {
-  margin: 100px auto;
+  margin: 180px auto;
   width: 350px;
-  background: #fff;
-  border-radius: 5px;
-  padding: 20px;
+  background-color: #FDFDFD;
+  border-radius: 20px;
+  padding: 40px 30px;
 }
+
 .card p {
-  color: black;
+  font-size: 24px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 20px;
+  color: #4D4D4D;
+  font-family: 'Meiryo';
 }
-input {
-  margin-top: 15px;
-  width: 80%;
-  border-radius: 10px;
-  padding: 10px;
-  border: 1px solid black;
-  color: black;
-}
+
 .form {
   text-align: center;
 }
-.form button {
-  margin-top: 15px;
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #4D4D4D;
+  font-size: 14px;
+}
+
+a{
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  color: hsl(200, 100%, 45%);
+  text-decoration: none;
+  font-size: 14px;
+}
+a:hover{
+  color: hsl(200, 100%, 80%);
+}
+
+button {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  color: #FDFDFD;
+  background-color:hsl(44, 30%, 50%);
+  border:0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+button:hover{
+  background-color:hsl(44, 30%, 48%);
 }
 </style>

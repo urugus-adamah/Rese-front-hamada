@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <!-- <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> -->
     </div>
     <router-view/>
   </div>
@@ -105,10 +105,11 @@ input, select {
 }
 
 html {
-  background-color: #15202b;
+  background-color: #0D0D0D;
+  color: #0D0D0D;
 }
 * {
-  color: white;
-  font-family: "Noto Sans JP";
+  font-family: "Yu Mincho";
 }
+
 </style>
