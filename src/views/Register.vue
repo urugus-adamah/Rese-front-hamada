@@ -4,13 +4,15 @@
        <h1 class="logo">Rese</h1>
    </div>
    <div class="card">
-     <p>ログイン</p>
+     <p>会員登録</p>
      <div class="form">
+       <input placeholder="氏名" type="text" />
        <input placeholder="メールアドレス" type="email" />
        <input placeholder="パスワード" type="password" />
-       <button>ログイン</button>
+       <input placeholder="パスワード(確認用)" type="password" />
+       <button>登録</button>
      </div>
-      <a href="/register">会員登録</a>
+      <a href="/">ログイン</a>
    </div>
  </div>
 </template>
