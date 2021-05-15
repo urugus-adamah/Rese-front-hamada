@@ -1,8 +1,6 @@
 <template>
  <div>
-   <div class="header">
-       <h1 class="logo">Rese</h1>
-   </div>
+   <Header></Header>
    <div class="card">
      <p>会員登録</p>
      <div class="form">
@@ -16,78 +14,73 @@
    </div>
  </div>
 </template>
-
+<script>
+  import Header from '../components/Header';
+  export default {
+    components:{
+      Header
+    }
+  };
+</script>
 <style scoped>
+  .card {
+    margin: 180px auto;
+    width: 350px;
+    background-color: #FDFDFD;
+    border-radius: 20px;
+    padding: 40px 30px;
+  }
 
-.header {
-  height: 90px;
-  width: 100%;
-}
-.logo {
-  display: inline-block;
-  cursor: pointer;
-  font-size: 48px;
-  color: #A69159;
-  margin: 25px 0 0 100px;
-}
+  .card p {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4D4D4D;
+    font-family: 'Meiryo';
+  }
 
-.card {
-  margin: 180px auto;
-  width: 350px;
-  background-color: #FDFDFD;
-  border-radius: 20px;
-  padding: 40px 30px;
-}
+  .form {
+    text-align: center;
+  }
 
-.card p {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #4D4D4D;
-  font-family: 'Meiryo';
-}
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    margin-bottom: 20px;
+    padding: 10px;
+    color: #4D4D4D;
+    font-size: 14px;
+  }
 
-.form {
-  text-align: center;
-}
+  a{
+    display: inline-block;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    color: hsl(200, 100%, 45%);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  a:hover{
+    transition-duration: 0.4s;
+    color: hsl(200, 100%, 80%);
+  }
 
-input {
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: 5px;
-  border: 1px solid #CCCCCC;
-  margin-bottom: 20px;
-  padding: 10px;
-  color: #4D4D4D;
-  font-size: 14px;
-}
-
-a{
-  display: inline-block;
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-  color: hsl(200, 100%, 45%);
-  text-decoration: none;
-  font-size: 14px;
-}
-a:hover{
-  color: hsl(200, 100%, 80%);
-}
-
-button {
-  width: 100%;
-  text-align: center;
-  padding: 10px 0;
-  color: #FDFDFD;
-  background-color:hsl(44, 30%, 50%);
-  border:0;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-button:hover{
-  background-color:hsl(44, 30%, 48%);
-}
+  button {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    color: #FDFDFD;
+    background-color:hsl(44, 30%, 50%);
+    border:0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:hover{
+    background-color:hsl(44, 30%, 48%);
+  }
 </style>
