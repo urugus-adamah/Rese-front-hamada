@@ -12,7 +12,7 @@
        <input placeholder="パスワード(確認用)" type="password" />
        <button>登録</button>
      </div>
-      <a href="/">ログイン</a>
+      <a href="/login">ログイン</a>
    </div>
  </div>
 </template>
