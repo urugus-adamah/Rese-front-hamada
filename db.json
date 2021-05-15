@@ -20,7 +20,7 @@
       "area_id": 1,
       "genre_id":1,
       "description":"これは店１の情報です",
-      "img_url":"shop1.ne.jp"
+      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg"
     },
     {
       "id": 2,
@@ -28,7 +28,15 @@
       "area_id": 1,
       "genre_id":2,
       "description":"これは店2の情報です",
-      "img_url":"shop1.ne.jp"
+      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg"
+    },
+        {
+      "id": 3,
+      "name": "店3",
+      "area_id": 2,
+      "genre_id":1,
+      "description":"これは店3の情報です",
+      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg"
     }
   ],
   "areas": [
