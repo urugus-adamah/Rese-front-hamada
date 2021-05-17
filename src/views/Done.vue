@@ -1,18 +1,15 @@
 <template>
   <div>
-    <div class="section">
-
-      <Header></Header>
-      <div class="container">
-        <div class="wrap">
-          <p>予約完了</p>
-          <div class="content">
-            <p>予約いただきありがとうございます。</p>
-            <p>予約内容の確認メールを送信しましたので</p>
-            <p>ご確認ください。</p>
-          </div>
-          <a href="/">ホームへ</a>
+    <Header></Header>
+    <div class="main">
+      <div class="main__container">
+        <p class="container__titile">予約完了</p>
+        <div class="container__content">
+          <p>予約いただきありがとうございます。</p>
+          <p>予約内容の確認メールを送信しましたので</p>
+          <p>ご確認ください。</p>
         </div>
+        <a href="/">ホームへ</a>
       </div>
     </div>
   </div>
@@ -26,35 +23,32 @@ export default {
 };
 </script>
 <style scoped>
-.section{
+.main{
   background-color: #E5E5E5;
+  text-align: center;
 }
 
-.container{
-    text-align: center;
-  }
-  .wrap {
-    display: inline-block;
-    margin: 180px auto;
-    background-color: #FDFDFD;
-    border-radius: 20px;
-    padding: 60px;
-    text-align: left;
-  }
+.main__container {
+  background-color: #FDFDFD;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 180px auto;
+  padding: 60px;
+  text-align: left;
+}
 
-  .wrap > p {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #4D4D4D;
-    font-family: 'Meiryo';
-  }
+.container__titile {
+  font-family: 'Meiryo';
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-  .content{
-    line-height: 1.3em;
-  }
+.container__content{
+  line-height: 1.3em;
+}
 
-  a{
+  /* a{
     display: inline-block;
     width: 100%;
     margin-top: 20px;
@@ -66,5 +60,5 @@ export default {
   a:hover{
     transition-duration: 0.4s;
     color: hsl(200, 100%, 80%);
-  }
+  } */
 </style>

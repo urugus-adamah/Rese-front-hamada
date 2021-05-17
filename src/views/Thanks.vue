@@ -1,10 +1,10 @@
 <template>
  <div>
    <Header></Header>
-   <div class="container">
-    <div class="wrap">
-      <p>登録完了</p>
-      <div class="content">
+   <div class="main">
+    <div class="main__container">
+      <p class="container__title">登録完了</p>
+      <div class="container__content">
         <p>この度はご登録いただきありがとうございます。</p>
         <p>登録確認メールを送信しました。</p>
         <p>1時間以上経過しても受信されない場合は、</p>
@@ -27,31 +27,31 @@
 </script>
 <style scoped>
 
-  .container{
+  .main{
     text-align: center;
   }
-  .wrap {
-    display: inline-block;
-    margin: 180px auto;
+  .main__container {
     background-color: #FDFDFD;
     border-radius: 20px;
+    display: inline-block;
+    margin: 180px auto;
     padding: 60px;
     text-align: left;
   }
 
-  .wrap > p {
+  .container__title {
+    color: #333;
+    font-family: 'Meiryo';
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #4D4D4D;
-    font-family: 'Meiryo';
   }
 
-  .content{
+  .container__content{
     line-height: 1.3em;
   }
 
-  a{
+  /* a{
     display: inline-block;
     width: 100%;
     margin-top: 20px;
@@ -63,6 +63,6 @@
   a:hover{
     transition-duration: 0.4s;
     color: hsl(200, 100%, 80%);
-  }
+  } */
 
 </style>

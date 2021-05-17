@@ -95,7 +95,7 @@ hr {
     display:block;
     height:1px;
     border:0;  
-    border-top:1px solid #cccccc;
+    border-top:1px solid #CCC;
     margin:1em 0;
     padding:0;
 }
@@ -103,13 +103,48 @@ hr {
 input, select {
     vertical-align:middle;
 }
-
-html {
-  background-color: #0D0D0D;
-  color: #0D0D0D;
-}
 * {
+  color: #333;
   font-family: "Yu Mincho";
+  font-size: 14px;
+}
+html {
+  background-color: #111;
+  border-color: #CCC;
+}
+a{
+  color: hsl(200, 100%, 45%);
+  display: inline-block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  /* font-size: 14px; */
+}
+a:hover{
+  color: hsl(200, 100%, 80%);
+  transition-duration: 0.4s;
+}
+button {
+  background-color:hsl(44, 30%, 50%);
+  border:0;
+  border-radius: 5px;
+  color: #FDFDFD;
+  cursor: pointer;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+button:hover{
+  background-color:hsl(44, 30%, 48%);
 }
 
+input {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #CCC ;
+  margin-bottom: 20px;
+  padding: 10px;
+}
 </style>

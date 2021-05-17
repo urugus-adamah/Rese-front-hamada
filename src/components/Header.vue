@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-      <h1 class="logo">Rese</h1>
+      <h1 class="header__logo">Rese</h1>
   </div>  
 </template>
 <style scoped>
@@ -8,11 +8,11 @@
     height: 90px;
     width: 100%;
   }
-  .logo {
-    display: inline-block;
-    cursor: pointer;
-    font-size: 48px;
+  .header__logo {
     color: #A69159;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 48px;
     margin: 25px 0 0 100px;
   }
 </style>

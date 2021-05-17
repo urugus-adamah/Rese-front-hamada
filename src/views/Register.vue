@@ -1,18 +1,18 @@
 <template>
- <div>
-   <Header></Header>
-   <div class="card">
-     <p>会員登録</p>
-     <div class="form">
-       <input placeholder="氏名" type="text" />
-       <input placeholder="メールアドレス" type="email" />
-       <input placeholder="パスワード" type="password" />
-       <input placeholder="パスワード(確認用)" type="password" />
-       <button>登録</button>
-     </div>
+  <div>
+    <Header></Header>
+    <div class="main">
+      <p class="main__title">会員登録</p>
+      <form class="main__form">
+        <input placeholder="氏名" type="text" />
+        <input placeholder="メールアドレス" type="email" />
+        <input placeholder="パスワード" type="password" />
+        <input placeholder="パスワード(確認用)" type="password" />
+        <button>登録</button>
+      </form>
       <a href="/login">ログイン</a>
-   </div>
- </div>
+    </div>
+  </div>
 </template>
 <script>
   import Header from '../components/Header';
@@ -23,39 +23,36 @@
   };
 </script>
 <style scoped>
-  .card {
-    margin: 180px auto;
-    width: 350px;
+  .main {
     background-color: #FDFDFD;
     border-radius: 20px;
+    margin: 180px auto;
     padding: 40px 30px;
+    width: 350px;
   }
 
-  .card p {
+  .main__title {
+    font-family: 'Meiryo';
     font-size: 24px;
     font-weight: bold;
-    text-align: center;
     margin-bottom: 20px;
-    color: #4D4D4D;
-    font-family: 'Meiryo';
-  }
-
-  .form {
     text-align: center;
   }
 
-  input {
+  .main__form {
+    text-align: center;
+  }
+
+  /* input {
     box-sizing: border-box;
     width: 100%;
     border-radius: 5px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #CCC;
     margin-bottom: 20px;
     padding: 10px;
-    color: #4D4D4D;
-    font-size: 14px;
-  }
+  } */
 
-  a{
+  /* a{
     display: inline-block;
     width: 100%;
     margin-top: 20px;
@@ -67,9 +64,9 @@
   a:hover{
     transition-duration: 0.4s;
     color: hsl(200, 100%, 80%);
-  }
+  } */
 
-  button {
+  /* button {
     width: 100%;
     text-align: center;
     padding: 10px 0;
@@ -78,9 +75,8 @@
     border:0;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
   }
   button:hover{
     background-color:hsl(44, 30%, 48%);
-  }
+  } */
 </style>
