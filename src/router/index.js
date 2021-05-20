@@ -5,6 +5,7 @@ import Register from '../views/Register.vue'
 import Thanks from '../views/Thanks.vue'
 import Done from '../views/Done.vue'
 import MyPage from '../views/MyPage.vue'
+import Shops from '../views/Shops.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component:MyPage
+  },
+  {
+    path: '/',
+    name: 'Shops',
+    component:Shops
   }
 
 ]

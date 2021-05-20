@@ -1,6 +1,10 @@
 <template>
   <div class="header">
-      <h1 class="header__logo">Rese</h1>
+      <h1 class="header__logo">
+        <a href="/">
+          Rese
+        </a>
+      </h1>
       <nav class="header__nav">
         <ul class="nav__list">
           <li>
@@ -23,6 +27,15 @@
     justify-content: space-between;
     width: 100%;
   }
+  .header a{
+    color: hsl(44, 30%, 50%);
+    cursor: pointer;
+    display: inline;
+  }
+  .header a:hover{
+    color: hsl(44, 30%, 65%);
+    transition-duration: 0.4s;
+  }
   .header__logo {
     color: #A69159;
     cursor: pointer;
@@ -37,16 +50,7 @@
   }
   .nav__list{
     display: flex;
-  }
-  .nav__list a{
-    color: #333;
-    cursor: pointer;
-    display: inline;
-    font-size: 14px;
-  }
-  .nav__list a:hover{
-    color: hsl(200, 100%, 45%);
-    transition-duration: 0.4s;
+    font-size: 16px;
   }
   .nav__list > li{
     width: 100%;
