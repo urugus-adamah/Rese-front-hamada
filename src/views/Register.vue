@@ -8,17 +8,25 @@
         <input placeholder="メールアドレス" type="email" />
         <input placeholder="パスワード" type="password" />
         <input placeholder="パスワード(確認用)" type="password" />
-        <button>登録</button>
+        <!-- <button>登録</button> -->
+        <MyButton :caption="caption"></MyButton>
+        <a href="/login">ログイン</a>
       </form>
-      <a href="/login">ログイン</a>
     </div>
   </div>
 </template>
 <script>
   import Header from '../components/Header';
+  import MyButton from '../components/MyButton';
   export default {
     components:{
-      Header
+      Header,
+      MyButton
+    },
+    data(){
+      return{
+        caption:"登録"
+      };
     }
   };
 </script>
@@ -50,33 +58,5 @@
     border: 1px solid #CCC;
     margin-bottom: 20px;
     padding: 10px;
-  } */
-
-  /* a{
-    display: inline-block;
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-    color: hsl(200, 100%, 45%);
-    text-decoration: none;
-    font-size: 14px;
-  }
-  a:hover{
-    transition-duration: 0.4s;
-    color: hsl(200, 100%, 80%);
-  } */
-
-  /* button {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    color: #FDFDFD;
-    background-color:hsl(44, 30%, 50%);
-    border:0;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:hover{
-    background-color:hsl(44, 30%, 48%);
   } */
 </style>

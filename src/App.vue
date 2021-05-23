@@ -118,25 +118,12 @@ a{
   margin-top: 20px;
   text-align: center;
   text-decoration: none;
-  width: 100%;
+  /* width: 100%; */
   /* font-size: 14px; */
 }
 a:hover{
   color: hsl(200, 100%, 80%);
   transition-duration: 0.4s;
-}
-button {
-  background-color:hsl(44, 30%, 50%);
-  border:0;
-  border-radius: 5px;
-  color: #FDFDFD;
-  cursor: pointer;
-  padding: 10px 0;
-  text-align: center;
-  width: 100%;
-}
-button:hover{
-  background-color:hsl(44, 30%, 48%);
 }
 
 input {

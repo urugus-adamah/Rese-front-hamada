@@ -25,7 +25,8 @@
               <td>ラーメン極み</td>
               <td class="table__num-of-users">1名</td>
               <td class="table__cancel">
-                <button class="cancel__button">キャンセル</button>
+                <!-- <button class="button--cancel">キャンセル</button> -->
+                <MyButton class="button--cancel" :caption="cancel">キャンセル</MyButton>
               </td>
             </tr>
             <tr>
@@ -33,7 +34,8 @@
               <td>ルーク</td>
               <td class="table__num-of-users">10名</td>
               <td class="table__cancel">
-                <button class="cancel__button">キャンセル</button>
+                <!-- <button class="button--cancel">キャンセル</button> -->
+                <MyButton class="button--cancel" :caption="cancel">キャンセル</MyButton>
               </td>
             </tr>
 
@@ -53,7 +55,8 @@
               <td>福岡県</td>
               <td>イタリアン</td>
               <td class="table__delete">
-                <button class="cancel__delete">削除</button>
+                <!-- <button class="button--erase">削除</button> -->
+                <MyButton class="button--erase" :caption="erase"></MyButton>
               </td>
             </tr>
           </table>
@@ -91,7 +94,8 @@
                 <input id="re-enter-password" type="password" >
               </li>
               <li>
-                <button class="renew__button">更新</button>
+                <!-- <button class="button--renew">更新</button> -->
+                <MyButton class="button--renew" :caption="renew"></MyButton>
               </li>
             </ul>
           </form>
@@ -102,9 +106,18 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
+import MyButton from '../components/MyButton';
 export default {
+  data(){
+    return{
+      cancel:"キャンセル",
+      erase:"削除",
+      renew:"更新",
+    };
+  },
   components:{
-    Header
+    Header,
+    MyButton
   }
 };
 </script>
@@ -139,12 +152,14 @@ export default {
     margin-left: 50px;
     width: 80%;
   }
-  .cancel__button ,.cancel__delete{
+
+  .button--cancel >>> .main-button,
+  .button--erase >>> .main-button, 
+  .button--renew >>> .main-button{
     padding: 2px;
   }
-  .renew__button{
+  .button--renew {
     margin: 0 0 0 auto;
-    padding: 2px;
     width: 65%;
   }
   .my-page__card{
@@ -180,7 +195,8 @@ export default {
     vertical-align: middle;
   }
 
-  .table__cancel, .table__delete{
+  .table__cancel,
+  .table__delete{
     padding: 0;
   }
   .table__num-of-users{
