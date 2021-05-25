@@ -6,6 +6,7 @@ import Thanks from '../views/Thanks.vue'
 import Done from '../views/Done.vue'
 import MyPage from '../views/MyPage.vue'
 import Shops from '../views/Shops.vue'
+import Detail from '../views/Detail.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,12 @@ const routes = [
     path: '/',
     name: 'Shops',
     component:Shops
+  },
+  {
+    path: '/detail:id',
+    name: 'Detail',
+    component: Detail,
+    props:true,
   }
 
 ]

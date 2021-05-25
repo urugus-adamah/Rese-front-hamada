@@ -123,7 +123,8 @@ export default {
 </script>
 <style scoped>
   .main{
-    background-color: #FEFEFE;
+    background-color: #FDFDFD;
+    min-height: 100vh;
     display: flex;
   }
   .main__nav{
@@ -167,7 +168,7 @@ export default {
     border-radius: 10px;
     margin-bottom: 50px;
     padding: 30px;
-    width: 50%;
+    width: 500px;
   }
   .card__table{
     width: 100%;

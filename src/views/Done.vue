@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
     <div class="main">
       <div class="main__container">
         <p class="container__titile">予約完了</p>
@@ -25,6 +25,7 @@ export default {
 <style scoped>
 .main{
   background-color: #E5E5E5;
+  height: 100vh;
   text-align: center;
 }
 

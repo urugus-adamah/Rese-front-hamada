@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
     <div class="main">
       <nav class="main__nav">
         <div class="nav__card">
@@ -49,7 +49,7 @@
               <p class="item__genre">焼肉</p>
             </div>
             <div class="item__button-favorite">
-              <FavoriteButton></FavoriteButton>
+              <FavoriteButton />
             </div>
           </div>
         </a>
@@ -76,7 +76,7 @@ export default {
 </script>
 <style scoped>
   .main{
-    background-color: #FEFEFE;
+    background-color: #FDFDFD;
     display: flex;
   }
   .main__nav{
