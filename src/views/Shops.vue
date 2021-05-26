@@ -7,52 +7,30 @@
           <p class="card__label">場所</p>
           <select name="area" id="" class="card__select--area">
             <option value=""></option>
-            <option value="tokyo">東京都</option>
-            <option value="fukuoka">福岡県</option>
+            <option v-for="(area,index) in areas" :key=index :value="area.name">{{area.name}}</option>
           </select>
           <p class="card__label">ジャンル</p>
           <select name="genre" id="" class="card__select--genre">
             <option value=""></option>
-            <option value="genre1">イタリアン</option>
-            <option value="genre1">ラーメン</option>
+            <option v-for="(genre,index) in genres" :key="index" :value="genre.name">{{genre.name}}</option>
           </select>
-          <!-- <button class="card__button__search">検索</button> -->
-          <MyButton class="button--search" :caption="search"></MyButton>
+          <MyButton class="button--search" :caption="search" />
         </div>
         <div class="nav__wrap">
           <input class="input--shop-name" type="text" placeholder="店名で探す">
-          <MyButton class="button--search" :caption="search"></MyButton>
+          <MyButton class="button--search" :caption="search" />
         </div>
       </nav>
       <div class="main__shops-page">
-        <a href="/detail:1">
-          <div class="shops__item">
-            <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="">
-            <p class="item__shop-name">仙人</p>
-            <div class="item__area-genre">
-              <p class="item__area">東京都</p>
-              <p>/</p>
-              <p class="item__genre">寿司</p>
-            </div>
-            <div class="item__button-favorite">
-              <FavoriteButton></FavoriteButton>
-            </div>
+        <div v-for="(shop,index) in shops" :key="index" >
+          <div @click="moveShop(shop.id)" class="shops__item">
+            <img :src="shop.img_url" alt="">
+            <p class="item__shop-name">{{shop.name}}</p>
+            <!-- idからnameを取得する -->
+            <p>{{shop.area_id}} / {{shop.genre_id}}</p>
+            <FavoriteButton class="item__button-favorite" />
           </div>
-        </a>
-        <a href="/detail:2">
-          <div class="shops__item">
-            <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg" alt="">
-            <p class="item__shop-name">牛助</p>
-            <div class="item__area-genre">
-              <p class="item__area">大阪府</p>
-              <p>/</p>
-              <p class="item__genre">焼肉</p>
-            </div>
-            <div class="item__button-favorite">
-              <FavoriteButton />
-            </div>
-          </div>
-        </a>
+        </div>
       </div>
     </div>
   </div>
@@ -61,17 +39,40 @@
 import Header from '../components/HeaderWithNav';
 import MyButton from '../components/MyButton';
 import FavoriteButton from '../components/FavoriteButton';
+import axios from 'axios';
 export default {
   data(){
     return{
-      search:"検索"
+      search:"検索",
+      shops:"",
+      areas:"",
+      genres:"",
     };
   },
   components:{
     Header,
     MyButton,
     FavoriteButton,
-  }
+  },
+  async created(){
+    const url = 'http://localhost:3000/shops';
+    const url_area = 'http://localhost:3000/areas';
+    const url_genre = 'http://localhost:3000/genres';
+    const items = await axios.get(url);
+    this.shops = items.data;
+    const areas = await axios.get(url_area);
+    this.areas = areas.data;
+    const genres = await axios.get(url_genre);
+    this.genres = genres.data;
+  },
+  methods:{
+    moveShop($id){
+      this.$router.push({
+        path:'/detail/' + $id,
+        params:{id:$id},
+      });
+    }
+  },
 };
 </script>
 <style scoped>

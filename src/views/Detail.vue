@@ -3,22 +3,12 @@
     <Header />
     <div class="main">
       <div class="shops__item">
-        <img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="">
-        <p class="item__shop-name">仙人</p>
-        <div class="item__area-genre">
-          <p class="item__area">東京都</p>
-          <p>/</p>
-          <p class="item__genre">寿司</p>
-        </div>
-        <div class="item__button-favorite">
-          <FavoriteButton />
-        </div>
+        <img :src="shop.img_url" alt="">
+        <p class="item__shop-name">{{shop.name}}</p>
+        <p>{{area.name}} / {{genre.name}}</p>
+        <FavoriteButton class="item__button-favorite" />
       </div>
-      <p class="shops__description">
-        料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。
-        食材・味・価格、お客様の満足度を徹底的に追及したお店です。
-        特別な日のお食事、ビジネス接待まで気軽に使用することができます。
-      </p>
+      <p class="shops__description">{{shop.description}}</p>
       <div class="form-reservation">
         <div class="form__items">
           <input type="text" name="" placeholder="日付を選択">
@@ -31,23 +21,46 @@
             <option v-for="h in 11" :value="h" :key="h">{{h+9}}:00</option>
           </select>
         </div>
-        <button class="button-reservate">予約する</button>
+        <button @click="reservation" class="button-reservate">予約する</button>
       </div>
     </div>
   </div>
-    
-  
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
 import FavoriteButton from '../components/FavoriteButton';
+import axios from 'axios';
 export default {
   props:[
     "id",
   ],
+  data(){
+    return{
+      shop:"",
+      area:"",
+      genre:"",
+    };
+  },
   components:{
     Header,
     FavoriteButton,
+  },
+  async created(){
+    const url = `http://localhost:3000/shops/${this.id}`;
+    const item = await axios.get(url);
+    this.shop = item.data;
+    const url_area = `http://localhost:3000/areas/${this.shop.area_id}`;
+    const area = await axios.get(url_area);
+    this.area = area.data;
+    const url_genre = `http://localhost:3000/genres/${this.shop.genre_id}`;
+    const genre = await axios.get(url_genre);
+    this.genre = genre.data;
+  },
+  methods:{
+    reservation(){
+      //予約前の確認メッセージ表示
+      //Done.vueへ遷移
+    }
   }
 };
 </script>
@@ -80,9 +93,6 @@ export default {
     font-family: 'Meiryo';
     font-size: 36px;
     margin-bottom: 15px;
-  }
-  .item__area-genre{
-    display: flex;
   }
   .card__select--area, .card__select--genre {
     border: 1px solid #CCC ;
