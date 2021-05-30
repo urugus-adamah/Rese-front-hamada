@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
     <div class="main">
       <nav class="main__nav">
         <ul>
@@ -11,38 +11,19 @@
       </nav>
       <div class="main__my-page">
         <h1 class="my-page__title">マイページ</h1>
+        <ListCard 
+          title="予約状況"
+          th1="日時"
+          th2="店名"
+          th3="人数"
+          :tables="reservations"
+          :td2="td_shop_name"
+          :td3="td_num_of_users"
+          button_caption="キャンセル"
+        >
+        </ListCard>
         <div class="my-page__card">
-          <p class="card__title">予約状況</p>
-          <table class="card__table">
-            <tr class="table__header">
-              <th>日時</th>
-              <th>店名</th>
-              <th>人数</th>
-              <th></th>
-            </tr>
-            <tr>
-              <td>21/04/01 18:00</td>
-              <td>ラーメン極み</td>
-              <td class="table__num-of-users">1名</td>
-              <td class="table__cancel">
-                <!-- <button class="button--cancel">キャンセル</button> -->
-                <MyButton class="button--cancel" :caption="cancel">キャンセル</MyButton>
-              </td>
-            </tr>
-            <tr>
-              <td>21/04/12 17:00</td>
-              <td>ルーク</td>
-              <td class="table__num-of-users">10名</td>
-              <td class="table__cancel">
-                <!-- <button class="button--cancel">キャンセル</button> -->
-                <MyButton class="button--cancel" :caption="cancel">キャンセル</MyButton>
-              </td>
-            </tr>
-
-          </table>
-        </div>
-        <div class="my-page__card">
-          <p class="card__title">お気に入り</p>
+          <h2 class="card__title">お気に入り</h2>
           <table class="card__table">
             <tr class="table__header">
               <th>店名</th>
@@ -62,7 +43,7 @@
           </table>
         </div>
         <div class="my-page__card">
-          <p class="card__title">登録内容</p>
+          <h2 class="card__title">登録内容</h2>
           <form class="card__form">
             <ul>
               <li>
@@ -94,8 +75,7 @@
                 <input id="re-enter-password" type="password" >
               </li>
               <li>
-                <!-- <button class="button--renew">更新</button> -->
-                <MyButton class="button--renew" :caption="renew"></MyButton>
+                <MyButton class="button--renew" :caption="renew" />
               </li>
             </ul>
           </form>
@@ -107,18 +87,52 @@
 <script>
 import Header from '../components/HeaderWithNav';
 import MyButton from '../components/MyButton';
+import ListCard from '../components/ListCard';
+import axios from 'axios';
 export default {
+  components:{
+    Header,
+    MyButton,
+    ListCard,
+  },
+  created(){
+    this.getReservationData();
+    this.getFavoritesData();
+  },
   data(){
     return{
       cancel:"キャンセル",
       erase:"削除",
       renew:"更新",
+      td_date:"21/04/01 18:00",
+      td_shop_name:"ラーメン極み",
+      td_num_of_users:"1名",
+      reservations:'',
+      favorites:'',
+      user:'',
     };
   },
-  components:{
-    Header,
-    MyButton
-  }
+  methods:{
+    async getReservationData(){
+      const url_reservation = 'http://localhost:3000/reservations';
+      const reservation_items = axios.get(url_reservation);
+      const data_reservations = await reservation_items;
+      this.reservations = data_reservations.data;
+    },
+    async getFavoritesData(){
+      const url_favorite = 'http://localhost:3000/favorites';
+      const favorite_items = axios.get(url_favorite);
+      const data_favorites = await favorite_items;
+      this.favorites = data_favorites.data;
+    },
+    // async getUsersInfo(){
+    //   const url_users = 'http://localhost:3000/users';
+    //   const user_item = axios.get(url_users);
+    //   const data_user = await user_item;
+    //   this.user = data_user.data; 
+    // }
+  },
+  
 };
 </script>
 <style scoped>
@@ -153,13 +167,12 @@ export default {
     margin-left: 50px;
     width: 80%;
   }
-
-  .button--cancel >>> .main-button,
-  .button--erase >>> .main-button, 
-  .button--renew >>> .main-button{
+  .button--cancel,
+  .button--erase, 
+  .button--renew{
     padding: 2px;
   }
-  .button--renew {
+  .button--renew{
     margin: 0 0 0 auto;
     width: 65%;
   }

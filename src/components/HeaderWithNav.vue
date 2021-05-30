@@ -1,22 +1,30 @@
 <template>
-  <div class="header">
+  <header class="header">
+    <!-- コンポーネント化 -->
       <h1 class="header__logo">
-        <a href="/">
-          Rese
-        </a>
+        <router-link :to="{path:'/'}">Rese</router-link>
       </h1>
+      <!-- <Header /> -->
       <nav class="header__nav">
         <ul class="nav__list">
           <li>
-            <a href="/mypage">マイページ</a>
+            <router-link :to="{path:'/mypage'}">マイページ</router-link>
           </li>
           <li>
-            <a href="/login">ログアウト</a>
+            <router-link :to="{path:'/login'}">ログアウト</router-link>
           </li>
         </ul>
       </nav>
-  </div>  
+  </header>  
 </template>
+<script>
+// import Header from '../components/Header';
+// export default {
+//   components:{
+//     Header,
+//   }
+// }
+</script>
 <style scoped>
   .header {
     align-items: flex-end;

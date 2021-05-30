@@ -10,7 +10,8 @@
         <input placeholder="パスワード(確認用)" type="password" />
         <!-- <button>登録</button> -->
         <MyButton :caption="caption"></MyButton>
-        <a href="/login">ログイン</a>
+        <!-- <a href="/login">ログイン</a> -->
+        <router-link :to="{ path: '/login'}">ログイン</router-link>
       </form>
     </div>
   </div>

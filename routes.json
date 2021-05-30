@@ -1,0 +1,11 @@
+{
+  "/api/v1/*":"/$1",
+  "/register":"/users",
+  "/login":"/users",
+  "/logout":"/users",
+  "/users/:user_id/favorites":"/favorites?user_id=:user_id",
+  "/users/:user_id/reservations":"/reservations?user_id=:user_id",
+  "/shops/:shop_id/favorites":"/favorites?shop_id=:shop_id",
+  "/shops/:shop_id/reservations":"/reservations?shop_id=:shop_id",
+  "/shops/:shop_id/reservations/:id":"/reservations?shop_id=:shop_id&id=:id"
+}

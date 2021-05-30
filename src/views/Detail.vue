@@ -3,14 +3,14 @@
     <Header />
     <div class="main">
       <div class="shops__item">
-        <img :src="shop.img_url" alt="">
+        <img :src="shop.img_url" alt="shop-image">
         <p class="item__shop-name">{{shop.name}}</p>
         <p>{{area.name}} / {{genre.name}}</p>
         <FavoriteButton class="item__button-favorite" />
       </div>
       <p class="shops__description">{{shop.description}}</p>
       <div class="form-reservation">
-        <div class="form__items">
+        <form class="form__items">
           <input type="text" name="" placeholder="日付を選択">
           <select name="num-of-users" id="num-of-users" >
             <option value="0" selected>人数を選択</option>
@@ -20,7 +20,7 @@
             <option value="0">時間を選択</option>
             <option v-for="h in 11" :value="h" :key="h">{{h+9}}:00</option>
           </select>
-        </div>
+        </form>
         <button @click="reservation" class="button-reservate">予約する</button>
       </div>
     </div>
@@ -46,6 +46,7 @@ export default {
     FavoriteButton,
   },
   async created(){
+    //methodsへ記述、並列処理
     const url = `http://localhost:3000/shops/${this.id}`;
     const item = await axios.get(url);
     this.shop = item.data;

@@ -1,9 +1,9 @@
 <template>
  <div>
-   <Header></Header>
+   <Header />
    <div class="main">
     <div class="main__container">
-      <p class="container__title">登録完了</p>
+      <h2 class="container__title">登録完了</h2>
       <div class="container__content">
         <p>この度はご登録いただきありがとうございます。</p>
         <p>登録確認メールを送信しました。</p>
@@ -13,6 +13,7 @@
         <p>ご登録メールアドレスが正しいかご確認ください。</p>
       </div>
         <a href="/login">ログイン</a>
+        <!-- <router-link ></router-link> -->
     </div>
    </div>
  </div>

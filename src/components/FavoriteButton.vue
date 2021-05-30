@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <button class="button-favorite"></button>
-  </div>
+  <button class="button-favorite"></button>
 </template>
 <script>
 export default {

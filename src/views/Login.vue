@@ -1,15 +1,14 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
     <div class="main">
       <p class="main__title">ログイン</p>
-      <div class="main__form">
+      <form class="main__form">
         <input placeholder="メールアドレス" type="email" />
         <input placeholder="パスワード" type="password" />
-        <!-- <button>ログイン</button> -->
-        <MyButton :caption="caption"></MyButton>
-        <a href="/register">会員登録</a>
-      </div>
+        <MyButton :caption="caption" />
+        <router-link :to="{ path: '/register'}">会員登録</router-link>
+      </form>
     </div>
   </div>
 </template>

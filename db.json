@@ -4,13 +4,19 @@
       "id": 1,
       "name": "田中",
       "email": "tanaka@hogehoge.com",
-      "password":"hogehoge"
+      "password": "hogehoge"
     },
     {
       "id": 2,
       "name": "斉藤",
       "email": "saitou@hogehoge.com",
-      "password":"hogehoge"
+      "password": "hogehoge"
+    },
+    {
+      "id": 3,
+      "name": "佐々木",
+      "email": "sasaki@hogehoge.com",
+      "password": "hogehoge"
     }
   ],
   "shops": [
@@ -18,81 +24,100 @@
       "id": 1,
       "name": "仙人",
       "area_id": 1,
-      "genre_id":2,
-      "description":"料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。食材・味・価格、お客様の満足度を徹底的に追及したお店です。特別な日のお食事、ビジネス接待まで気軽に使用することができます。",
-      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg"
+      "genre_id": 2,
+      "description": "料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。食材・味・価格、お客様の満足度を徹底的に追及したお店です。特別な日のお食事、ビジネス接待まで気軽に使用することができます。",
+      "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg"
     },
     {
       "id": 2,
       "name": "香",
       "area_id": 1,
-      "genre_id":1,
-      "description":"大小さまざまなお部屋をご用意してます。デートや接待、記念日や誕生日など特別な日にご利用ください。皆様のご来店をお待ちしております。",
-      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg"
+      "genre_id": 1,
+      "description": "大小さまざまなお部屋をご用意してます。デートや接待、記念日や誕生日など特別な日にご利用ください。皆様のご来店をお待ちしております。",
+      "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg"
     },
-        {
+    {
       "id": 3,
       "name": "鳥雨",
       "area_id": 2,
-      "genre_id":3,
-      "description":"素材の旨味を存分に引き出す為に、塩焼を中心としたお店です。比内地鶏を中心に、厳選素材を職人が備長炭で豪快に焼き上げます。清潔な内装に包まれた大人の隠れ家で贅沢で優雅な時間をお過ごし下さい。",
-      "img_url":"https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg"
+      "genre_id": 3,
+      "description": "素材の旨味を存分に引き出す為に、塩焼を中心としたお店です。比内地鶏を中心に、厳選素材を職人が備長炭で豪快に焼き上げます。清潔な内装に包まれた大人の隠れ家で贅沢で優雅な時間をお過ごし下さい。",
+      "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg"
     }
   ],
   "areas": [
     {
-      "id":1,
+      "id": 1,
       "name": "東京都"
     },
     {
-      "id":2,
+      "id": 2,
       "name": "大阪府"
     },
     {
-      "id":3,
+      "id": 3,
       "name": "福岡県"
     }
   ],
   "genres": [
     {
-      "id":1,
+      "id": 1,
       "name": "焼肉"
     },
     {
-      "id":2,
+      "id": 2,
       "name": "寿司"
     },
     {
-      "id":3,
+      "id": 3,
       "name": "居酒屋"
     }
   ],
-  "favorites":[
+  "favorites": [
     {
-      "id":1,
-      "user_id":1,
-      "shop_id":1
+      "id": 1,
+      "user_id": 1,
+      "shop_id": 1
     },
     {
-      "id":2,
-      "user_id":2,
-      "shop_id":1
+      "id": 2,
+      "user_id": 2,
+      "shop_id": 1
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "shop_id": 2
     }
   ],
-  "reservations":[
+  "reservations": [
     {
-      "id":1,
-      "num_of_users":10,
-      "date_time":"2021-05-30 18:00:00",
-      "user_id":1,
-      "shop_id":1
+      "id": 1,
+      "num_of_users": 10,
+      "date_time": "2021-05-30 18:00:00",
+      "user_id": 1,
+      "shop_id": 1
     },
     {
-      "id":2,
-      "num_of_users":20,
-      "date_time":"2021-05-30 18:00:00",
-      "user_id":2,
-      "shop_id":2
+      "id": 2,
+      "num_of_users": 20,
+      "date_time": "2021-05-30 18:00:00",
+      "user_id": 2,
+      "shop_id": 2
+    },
+    {
+      "id": 3,
+      "num_of_users": 50,
+      "date_time": "2021-05-30 18:00:00",
+      "user_id": 2,
+      "shop_id": 3
+    },
+    {
+      "num_of_users": 100,
+      "date_time": "2021-05-30 18:00:00",
+      "user_id": 3,
+      "shop_id": 3,
+      "id": 4
     }
   ]
 }

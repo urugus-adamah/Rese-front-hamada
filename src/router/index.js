@@ -34,7 +34,10 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPage',
-    component:MyPage
+    component: MyPage,
+    meta: {
+      requiresAuth:true,
+    },
   },
   {
     path: '/',
@@ -45,6 +48,9 @@ const routes = [
     path: '/detail/:id',
     name: 'Detail',
     component: Detail,
+    meta: {
+      requiresAuth:true,
+    },
     props:true,
   }
 

@@ -5,14 +5,14 @@
       <nav class="main__nav">
         <div class="nav__card">
           <p class="card__label">場所</p>
-          <select name="area" id="" class="card__select--area">
+          <select name="area" class="card__select--area">
             <option value=""></option>
-            <option v-for="(area,index) in areas" :key=index :value="area.name">{{area.name}}</option>
+            <option v-for="(area,id) in areas" :key=id :value="area.name">{{area.name}}</option>
           </select>
           <p class="card__label">ジャンル</p>
-          <select name="genre" id="" class="card__select--genre">
+          <select name="genre" class="card__select--genre">
             <option value=""></option>
-            <option v-for="(genre,index) in genres" :key="index" :value="genre.name">{{genre.name}}</option>
+            <option v-for="(genre,id) in genres" :key="id" :value="genre.name">{{genre.name}}</option>
           </select>
           <MyButton class="button--search" :caption="search" />
         </div>
@@ -24,10 +24,10 @@
       <div class="main__shops-page">
         <div v-for="(shop,index) in shops" :key="index" >
           <div @click="moveShop(shop.id)" class="shops__item">
-            <img :src="shop.img_url" alt="">
+            <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>
             <!-- idからnameを取得する -->
-            <p>{{shop.area_id}} / {{shop.genre_id}}</p>
+            <p>{{areas[shop.area_id].name}} / {{genres[shop.genre_id-1].name}}</p>
             <FavoriteButton class="item__button-favorite" />
           </div>
         </div>
@@ -54,22 +54,28 @@ export default {
     MyButton,
     FavoriteButton,
   },
-  async created(){
-    const url = 'http://localhost:3000/shops';
-    const url_area = 'http://localhost:3000/areas';
-    const url_genre = 'http://localhost:3000/genres';
-    const items = await axios.get(url);
-    this.shops = items.data;
-    const areas = await axios.get(url_area);
-    this.areas = areas.data;
-    const genres = await axios.get(url_genre);
-    this.genres = genres.data;
+  created(){
+    this.getShopsData();
   },
   methods:{
-    moveShop($id){
+    async getShopsData(){
+      const url_shop = 'http://localhost:3000/shops';
+      const url_area = 'http://localhost:3000/areas';
+      const url_genre = 'http://localhost:3000/genres';
+      const shop_items = axios.get(url_shop);
+      const areas_items = axios.get(url_area);
+      const genre_items = axios.get(url_genre);
+      const data_shops = await shop_items;
+      const data_areas = await areas_items;
+      const data_genres = await genre_items;
+      this.shops = data_shops.data;
+      this.areas = data_areas.data;
+      this.genres = data_genres.data;
+    },
+    moveShop(id){
       this.$router.push({
-        path:'/detail/' + $id,
-        params:{id:$id},
+        path:'/detail/' + id,
+        params:{id:id},
       });
     }
   },

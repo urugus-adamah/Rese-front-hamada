@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <button class="main-button">{{caption}}</button>
-  </div>
+  <button class="main-button">{{caption}}</button>
 </template>
 <script>
 export default {
-  props:["caption"]
+  props:{
+    caption:String,
+  }
 };
 </script>
 

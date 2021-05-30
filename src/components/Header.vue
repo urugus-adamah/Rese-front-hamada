@@ -1,18 +1,16 @@
 <template>
-  <div class="header">
+  <header class="header">
       <h1 class="header__logo">
-        <a href="/login">
-          Rese
-        </a>
+        <router-link :to="{path:'/login'}" class="link--header">Rese</router-link>
       </h1>
-  </div>  
+  </header>  
 </template>
 <style scoped>
   .header {
     height: 90px;
     width: 100%;
   }
-  .header a{
+  .link--header {
     color: hsl(44, 30%, 50%);
     cursor: pointer;
     display: inline;
