@@ -4,13 +4,11 @@
     <div class="main">
       <p class="main__title">会員登録</p>
       <form class="main__form">
-        <input placeholder="氏名" type="text" />
-        <input placeholder="メールアドレス" type="email" />
-        <input placeholder="パスワード" type="password" />
-        <input placeholder="パスワード(確認用)" type="password" />
-        <!-- <button>登録</button> -->
-        <MyButton :caption="caption"></MyButton>
-        <!-- <a href="/login">ログイン</a> -->
+        <input placeholder="氏名" type="text" v-model="name" />
+        <input placeholder="メールアドレス" type="email" v-model="email"/>
+        <input placeholder="パスワード" type="password" v-model="password"/>
+        <input placeholder="パスワード(確認用)" type="password" v-model="conf_password" />
+        <MyButton @myButton-cliked ="auth" caption="登録"></MyButton>
         <router-link :to="{ path: '/login'}">ログイン</router-link>
       </form>
     </div>
@@ -19,6 +17,7 @@
 <script>
   import Header from '../components/Header';
   import MyButton from '../components/MyButton';
+  import axios from 'axios';
   export default {
     components:{
       Header,
@@ -26,9 +25,51 @@
     },
     data(){
       return{
-        caption:"登録"
+        name:"",
+        email:"",
+        password:"",
+        conf_password:"",
+        errors:[],
       };
-    }
+    },
+    methods:{
+      auth(){
+        if (this.isValidForm()) {
+          const url = "http://localhost:3000/api/v1/register";
+          axios
+            .post(url,{
+              name:this.name,
+              email:this.email,
+              password:this.password,
+            })
+            .then((response) => {
+              console.log(response);
+              this.$router.push({name:'Thanks'});
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        } else {
+          alert(this.errors);
+        }
+      },
+      isValidForm(){
+        this.errors=[];
+        if(!this.name){
+          this.errors.push("Name required");
+        }
+        if(!this.email){
+          this.errors.push("Email required")
+        }
+        if(!this.password || !this.conf_password){
+          this.errors.push("Password required");
+        }
+        if(this.password != this.conf_password){
+          this.errors.push("Password mismatch");
+        }
+        return !this.errors.length;
+      }
+    },
   };
 </script>
 <style scoped>

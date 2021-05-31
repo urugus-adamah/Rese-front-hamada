@@ -12,8 +12,7 @@
         <p>お手数ですが、マイページにて</p>
         <p>ご登録メールアドレスが正しいかご確認ください。</p>
       </div>
-        <a href="/login">ログイン</a>
-        <!-- <router-link ></router-link> -->
+      <router-link :to="{path:'/login'}"> ログイン</router-link>
     </div>
    </div>
  </div>
@@ -37,7 +36,6 @@
     display: inline-block;
     margin: 180px auto;
     padding: 60px;
-    text-align: left;
   }
 
   .container__title {
@@ -46,24 +44,12 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    text-align: left;
   }
 
   .container__content{
     line-height: 1.3em;
+    text-align: left;
   }
-
-  /* a{
-    display: inline-block;
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-    color: hsl(200, 100%, 45%);
-    text-decoration: none;
-    font-size: 14px;
-  }
-  a:hover{
-    transition-duration: 0.4s;
-    color: hsl(200, 100%, 80%);
-  } */
 
 </style>

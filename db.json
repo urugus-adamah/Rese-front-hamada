@@ -17,6 +17,24 @@
       "name": "佐々木",
       "email": "sasaki@hogehoge.com",
       "password": "hogehoge"
+    },
+    {
+      "id": 4,
+      "name": "山田",
+      "email": "yamada@hogehoge.com",
+      "password": "hogehoge"
+    },
+    {
+      "name": "浜田",
+      "email": "hamada@hogehoge.com",
+      "password": "hogehoge",
+      "id": 5
+    },
+    {
+      "name": "test",
+      "email": "test@hogehoge.com",
+      "password": "hoge",
+      "id": 6
     }
   ],
   "shops": [

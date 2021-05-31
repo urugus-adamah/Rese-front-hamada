@@ -1,10 +1,16 @@
 <template>
-  <button class="main-button">{{caption}}</button>
+  <!-- <button class="main-button">{{caption}}</button> -->
+  <button @click.prevent="clickHandler" class="main-button">{{caption}}</button>
 </template>
 <script>
 export default {
   props:{
     caption:String,
+  },
+  methods:{
+    clickHandler(){
+      this.$emit('myButton-cliked');
+    },
   }
 };
 </script>
