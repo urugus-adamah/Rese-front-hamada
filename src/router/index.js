@@ -7,6 +7,7 @@ import Done from '../views/Done.vue'
 import MyPage from '../views/MyPage.vue'
 import Shops from '../views/Shops.vue'
 import Detail from '../views/Detail.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -35,22 +36,25 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: MyPage,
-    meta: {
-      requiresAuth:true,
-    },
+    // meta: {
+    //   requiresAuth:true,
+    // },
   },
   {
     path: '/',
     name: 'Shops',
-    component:Shops
+    component: Shops,
+    // meta: {
+    //   requiresAuth: true,
+    // },
   },
   {
     path: '/detail/:id',
     name: 'Detail',
     component: Detail,
-    meta: {
-      requiresAuth:true,
-    },
+    // meta: {
+    //   requiresAuth:true,
+    // },
     props:true,
   }
 
@@ -60,6 +64,22 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  if (
+    to.matched.some((record) => record.meta.requiresAuth) &&
+    !store.state.auth
+  ) {
+    next({
+      path: "/",
+      query: {
+        redirect: to.fullPath,
+      },
+    });
+  } else {
+    next();
+  }
+});
+
+export default router;

@@ -1,5 +1,4 @@
 <template>
-  <!-- <button class="main-button">{{caption}}</button> -->
   <button @click.prevent="clickHandler" class="main-button">{{caption}}</button>
 </template>
 <script>

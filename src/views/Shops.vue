@@ -26,7 +26,6 @@
           <div @click="moveShop(shop.id)" class="shops__item">
             <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>
-            <!-- idからnameを取得する -->
             <p>{{areas[shop.area_id].name}} / {{genres[shop.genre_id-1].name}}</p>
             <FavoriteButton class="item__button-favorite" />
           </div>
@@ -59,9 +58,9 @@ export default {
   },
   methods:{
     async getShopsData(){
-      const url_shop = 'http://localhost:3000/shops';
-      const url_area = 'http://localhost:3000/areas';
-      const url_genre = 'http://localhost:3000/genres';
+      const url_shop = 'http://localhost:3000/api/v1/shops';
+      const url_area = 'http://localhost:3000/api/v1/areas';
+      const url_genre = 'http://localhost:3000/api/v1/genres';
       const shop_items = axios.get(url_shop);
       const areas_items = axios.get(url_area);
       const genre_items = axios.get(url_genre);

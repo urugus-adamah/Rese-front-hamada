@@ -21,7 +21,7 @@
             <option v-for="h in 11" :value="h" :key="h">{{h+9}}:00</option>
           </select>
         </form>
-        <button @click="reservation" class="button-reservate">予約する</button>
+        <button @myButton-cliked="reservation" class="button-reservate">予約する</button>
       </div>
     </div>
   </div>
@@ -47,13 +47,13 @@ export default {
   },
   async created(){
     //methodsへ記述、並列処理
-    const url = `http://localhost:3000/shops/${this.id}`;
+    const url = `http://localhost:3000/api/v1/shops/${this.id}`;
     const item = await axios.get(url);
     this.shop = item.data;
-    const url_area = `http://localhost:3000/areas/${this.shop.area_id}`;
+    const url_area = `http://localhost:3000/api/v1/areas/${this.shop.area_id}`;
     const area = await axios.get(url_area);
     this.area = area.data;
-    const url_genre = `http://localhost:3000/genres/${this.shop.genre_id}`;
+    const url_genre = `http://localhost:3000/api/v1/genres/${this.shop.genre_id}`;
     const genre = await axios.get(url_genre);
     this.genre = genre.data;
   },

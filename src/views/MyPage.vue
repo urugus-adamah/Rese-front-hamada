@@ -114,23 +114,17 @@ export default {
   },
   methods:{
     async getReservationData(){
-      const url_reservation = 'http://localhost:3000/reservations';
+      const url_reservation = 'http://localhost:3000/api/v1/reservations';
       const reservation_items = axios.get(url_reservation);
       const data_reservations = await reservation_items;
       this.reservations = data_reservations.data;
     },
     async getFavoritesData(){
-      const url_favorite = 'http://localhost:3000/favorites';
+      const url_favorite = 'http://localhost:3000/api/v1/favorites';
       const favorite_items = axios.get(url_favorite);
       const data_favorites = await favorite_items;
       this.favorites = data_favorites.data;
     },
-    // async getUsersInfo(){
-    //   const url_users = 'http://localhost:3000/users';
-    //   const user_item = axios.get(url_users);
-    //   const data_user = await user_item;
-    //   this.user = data_user.data; 
-    // }
   },
   
 };

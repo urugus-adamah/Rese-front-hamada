@@ -4,9 +4,9 @@
     <div class="main">
       <p class="main__title">ログイン</p>
       <form class="main__form">
-        <input placeholder="メールアドレス" type="email" />
-        <input placeholder="パスワード" type="password" />
-        <MyButton :caption="caption" />
+        <input placeholder="メールアドレス" type="email" v-model="email"/>
+        <input placeholder="パスワード" type="password" v-model="password" />
+        <MyButton @myButton-cliked="auth" caption="ログイン" />
         <router-link :to="{ path: '/register'}">会員登録</router-link>
       </form>
     </div>
@@ -18,13 +18,36 @@
   export default {
     data(){
       return{
-        caption:"ログイン",
+        email:"",
+        password:""
       };
     },
     components:{
       Header,
       MyButton,
     },
+    methods:{
+      auth(){
+        if(this.isValidForm()){
+          this.$store.dispatch("login",{
+            email:this.email,
+            password:this.password,
+          });
+        } else {
+          alert(this.errors);
+        }
+      },
+      isValidForm(){
+        this.errors=[];
+        if(!this.email){
+          this.errors.push("Email required")
+        }
+        if(!this.password){
+          this.errors.push("Password required");
+        }
+        return !this.errors.length;
+      },
+    }
   };
 </script>
 

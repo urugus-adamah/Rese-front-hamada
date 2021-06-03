@@ -9,7 +9,7 @@
           <p>予約内容の確認メールを送信しましたので</p>
           <p>ご確認ください。</p>
         </div>
-        <a href="/">ホームへ</a>
+        <router-link :to="{path:'/'}">ホームへ</router-link>
       </div>
     </div>
   </div>
@@ -35,7 +35,6 @@ export default {
   display: inline-block;
   margin: 180px auto;
   padding: 60px;
-  text-align: left;
 }
 
 .container__titile {
@@ -43,23 +42,12 @@ export default {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: left;
 }
 
 .container__content{
   line-height: 1.3em;
+  text-align: left;
 }
 
-  /* a{
-    display: inline-block;
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-    color: hsl(200, 100%, 45%);
-    text-decoration: none;
-    font-size: 14px;
-  }
-  a:hover{
-    transition-duration: 0.4s;
-    color: hsl(200, 100%, 80%);
-  } */
 </style>
