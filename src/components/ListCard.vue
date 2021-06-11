@@ -8,14 +8,6 @@
         <th>{{th3}}</th>
         <th></th>
       </tr>
-      <!-- <tr>
-        <td>{{td1}}</td>
-        <td>{{td2}}</td>
-        <td class="table__num-of-users">{{td3}}</td>
-        <td class="table__cancel">
-          <MyButton class="my-button" :caption="button_caption">{{button_caption}}</MyButton>
-        </td>
-      </tr> -->
       <tr>
         <td>{{td1}}</td>
         <td>{{td2}}</td>
@@ -35,11 +27,11 @@ export default {
   },
   props:{
     button_caption:String,
+    // オブジェクトとして渡すとなお良い
     title:String,
     th1:String,
     th2:String,
     th3:String,
-    // td1:String,
     td2:String,
     td3:String,
     tables:Object,

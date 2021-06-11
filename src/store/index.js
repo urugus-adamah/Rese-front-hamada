@@ -21,7 +21,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({ commit }, { email, password}) {
+      // console.log(email);
+      // console.log(password);
       const responseLogin = await axios.get(
         "http://localhost:3000/api/v1/login",
         {
@@ -29,16 +31,7 @@ export default new Vuex.Store({
           password: password,
         }
       );
-      const responseUser = await axios.get(
-        " http://localhost:3000/api/v1/users",
-        {
-          params: {
-            email: email,
-          },
-        }
-      );
       commit("auth", responseLogin.data.auth);
-      commit("user", responseUser.data.data[0]);
       router.replace("/");
     }
   },

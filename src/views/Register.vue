@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <div class="main">
-      <p class="main__title">会員登録</p>
+      <h2 class="main__title">会員登録</h2>
       <form class="main__form">
         <input placeholder="氏名" type="text" v-model="name" />
         <input placeholder="メールアドレス" type="email" v-model="email"/>
@@ -32,6 +32,9 @@
         errors:[],
       };
     },
+    computed:{
+      // isValidForm
+    },
     methods:{
       auth(){
         if (this.isValidForm()) {
@@ -59,7 +62,8 @@
           this.errors.push("Name required");
         }
         if(!this.email){
-          this.errors.push("Email required")
+          // アドレスの正規表現
+          this.errors.push("Email required");
         }
         if(!this.password || !this.conf_password){
           this.errors.push("Password required");

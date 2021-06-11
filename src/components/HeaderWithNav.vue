@@ -4,7 +4,6 @@
       <h1 class="header__logo">
         <router-link :to="{path:'/'}">Rese</router-link>
       </h1>
-      <!-- <Header /> -->
       <nav class="header__nav">
         <ul class="nav__list">
           <li>

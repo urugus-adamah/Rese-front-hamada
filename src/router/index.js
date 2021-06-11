@@ -44,17 +44,11 @@ const routes = [
     path: '/',
     name: 'Shops',
     component: Shops,
-    // meta: {
-    //   requiresAuth: true,
-    // },
   },
   {
     path: '/detail/:id',
     name: 'Detail',
     component: Detail,
-    // meta: {
-    //   requiresAuth:true,
-    // },
     props:true,
   }
 

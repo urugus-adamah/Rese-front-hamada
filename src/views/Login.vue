@@ -28,7 +28,7 @@
     },
     methods:{
       auth(){
-        if(this.isValidForm()){
+        if(this.isValidForm(this.email, this.password)){
           this.$store.dispatch("login",{
             email:this.email,
             password:this.password,
@@ -37,16 +37,20 @@
           alert(this.errors);
         }
       },
-      isValidForm(){
-        this.errors=[];
-        if(!this.email){
-          this.errors.push("Email required")
+    },
+    computed:{
+      isValidForm:function(){
+        return function(email, password){
+          this.errors=[];
+          if(!email){
+            this.errors.push("Email required")
+          }
+          if(!password){
+            this.errors.push("Password required");
+          }
+          return !this.errors.length;
         }
-        if(!this.password){
-          this.errors.push("Password required");
-        }
-        return !this.errors.length;
-      },
+      }
     }
   };
 </script>
