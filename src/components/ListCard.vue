@@ -1,19 +1,19 @@
 <template>
   <div class="my-page__card">
-    <h2 class="card__title">{{title}}</h2>
+    <h2 class="card__title">{{tables.title}}</h2>
     <table class="card__table">
       <tr class="table__header">
-        <th>{{th1}}</th>
-        <th>{{th2}}</th>
-        <th>{{th3}}</th>
+        <th>{{tables.th1}}</th>
+        <th>{{tables.th2}}</th>
+        <th>{{tables.th3}}</th>
         <th></th>
       </tr>
-      <tr>
-        <td>{{td1}}</td>
-        <td>{{td2}}</td>
-        <td class="table__num-of-users">{{td3}}</td>
+      <tr v-for="(data, id) in tables.data" :key="id">
+        <td>{{data.date_time}}</td>
+        <td>{{data.shop_id}}</td>
+        <td >{{data.num_of_users}}</td>
         <td class="table__cancel">
-          <MyButton class="my-button" :caption="button_caption">{{button_caption}}</MyButton>
+          <MyButton class="my-button" :caption="buttonCaption">{{buttonCaption}}</MyButton>
         </td>
       </tr>
     </table>
@@ -26,23 +26,21 @@ export default {
     MyButton,
   },
   props:{
-    button_caption:String,
     // オブジェクトとして渡すとなお良い
-    title:String,
-    th1:String,
-    th2:String,
-    th3:String,
-    td2:String,
-    td3:String,
+    buttonCaption:String,
     tables:Object,
   },
   data(){
     return{
-      caption:this.button_caption,
-      tables_data:this.tables,
-      td1:this.tables_data[0],
+      caption:this.buttonCaption,
+      convert_data:this.tables,
     };
-  }
+  },
+  created(){
+    console.log(this.buttonCaption);
+  
+    console.log(this.convert_data);
+  },
 };
 </script>
 <style scoped>

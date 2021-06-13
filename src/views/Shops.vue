@@ -22,7 +22,7 @@
         </div>
       </nav>
       <div class="main__shops-page">
-        <div v-for="(shop,index) in shops" :key="index" >
+        <div v-for="(shop,id) in shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
             <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>

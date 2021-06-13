@@ -10,21 +10,15 @@ export default new Vuex.Store({
   plugins: [createPresistedState()],
   state: {
     auth: "",
-    user:"",
   },
   mutations: {
     auth(state, payload) {
       state.auth = payload;
     },
-    user(state, payload) {
-      state.user = payload;
-    }
   },
   actions: {
     async login({ commit }, { email, password}) {
-      // console.log(email);
-      // console.log(password);
-      const responseLogin = await axios.get(
+      const responseLogin = await axios.post(
         "http://localhost:3000/api/v1/login",
         {
           email: email,
@@ -33,7 +27,21 @@ export default new Vuex.Store({
       );
       commit("auth", responseLogin.data.auth);
       router.replace("/");
-    }
+    },
+    logout({ commit }) {
+      axios
+        .post("http://localhost:3000/api/v1/logout", {
+          auth: this.state.auth,
+        })
+        .then((response) => {
+          console.log(response);
+          commit("logout", response.data.auth);
+          router.replace("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   modules: {
   }

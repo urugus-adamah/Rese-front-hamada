@@ -33,7 +33,25 @@
       };
     },
     computed:{
-      // isValidForm
+      isValidForm(){
+        return function(){
+          this.errors=[];
+          if(!this.name){
+            this.errors.push("Name required");
+          }
+          if(!this.email){
+            // アドレスの正規表現
+            this.errors.push("Email required");
+          }
+          if(!this.password || !this.conf_password){
+            this.errors.push("Password required");
+          }
+          if(this.password != this.conf_password){
+            this.errors.push("Password mismatch");
+          }
+          return !this.errors.length;
+        };
+      }
     },
     methods:{
       auth(){
@@ -56,23 +74,7 @@
           alert(this.errors);
         }
       },
-      isValidForm(){
-        this.errors=[];
-        if(!this.name){
-          this.errors.push("Name required");
-        }
-        if(!this.email){
-          // アドレスの正規表現
-          this.errors.push("Email required");
-        }
-        if(!this.password || !this.conf_password){
-          this.errors.push("Password required");
-        }
-        if(this.password != this.conf_password){
-          this.errors.push("Password mismatch");
-        }
-        return !this.errors.length;
-      }
+      
     },
   };
 </script>

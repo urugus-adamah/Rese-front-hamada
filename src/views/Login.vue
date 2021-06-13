@@ -26,9 +26,23 @@
       Header,
       MyButton,
     },
+    computed:{
+      isValidForm(){
+        return function(){
+          this.errors=[];
+          if(!this.email){
+            this.errors.push("Email required")
+          }
+          if(!this.password){
+            this.errors.push("Password required");
+          }
+          return !this.errors.length;
+        }
+      }
+    },
     methods:{
       auth(){
-        if(this.isValidForm(this.email, this.password)){
+        if(this.isValidForm()){
           this.$store.dispatch("login",{
             email:this.email,
             password:this.password,
@@ -38,20 +52,7 @@
         }
       },
     },
-    computed:{
-      isValidForm:function(){
-        return function(email, password){
-          this.errors=[];
-          if(!email){
-            this.errors.push("Email required")
-          }
-          if(!password){
-            this.errors.push("Password required");
-          }
-          return !this.errors.length;
-        }
-      }
-    }
+    
   };
 </script>
 

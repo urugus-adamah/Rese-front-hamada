@@ -12,14 +12,8 @@
       <div class="main__my-page">
         <h1 class="my-page__title">マイページ</h1>
         <ListCard 
-          title="予約状況"
-          th1="日時"
-          th2="店名"
-          th3="人数"
-          :tables="reservations"
-          :td2="td_shop_name"
-          :td3="td_num_of_users"
-          button_caption="キャンセル"
+          :tables="reservation_table"
+          :button-caption="cancel"
         >
         </ListCard>
         <div class="my-page__card">
@@ -99,25 +93,33 @@ export default {
     this.getReservationData();
     this.getFavoritesData();
   },
+  mounted(){
+
+    // this.getReservationData();
+    // this.getFavoritesData();
+  },
   data(){
     return{
       cancel:"キャンセル",
       erase:"削除",
       renew:"更新",
-      td_date:"21/04/01 18:00",
-      td_shop_name:"ラーメン極み",
-      td_num_of_users:"1名",
-      reservations:'',
-      favorites:'',
-      user:'',
+      reservations:"",
+      favorites:"",
+      reservation_table:{
+        title:"予約状況",
+        th1:"日時",
+        th2:"店名",
+        th3:"人数",
+        data:"",
+      },
     };
   },
   methods:{
     async getReservationData(){
       const url_reservation = 'http://localhost:3000/api/v1/reservations';
       const reservation_items = axios.get(url_reservation);
-      const data_reservations = await reservation_items;
-      this.reservations = data_reservations.data;
+      const reservations = await reservation_items;
+      this.reservation_table.data = reservations.data;
     },
     async getFavoritesData(){
       const url_favorite = 'http://localhost:3000/api/v1/favorites';
@@ -125,6 +127,9 @@ export default {
       const data_favorites = await favorite_items;
       this.favorites = data_favorites.data;
     },
+    convertReservationData(){
+      this.reservation_table.data
+    }
   },
   
 };
