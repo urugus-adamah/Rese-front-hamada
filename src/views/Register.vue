@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header />
     <div class="main">
       <h2 class="main__title">会員登録</h2>
       <form class="main__form">
@@ -8,7 +8,7 @@
         <input placeholder="メールアドレス" type="email" v-model="email"/>
         <input placeholder="パスワード" type="password" v-model="password"/>
         <input placeholder="パスワード(確認用)" type="password" v-model="conf_password" />
-        <MyButton @myButton-cliked ="auth" caption="登録"></MyButton>
+        <MyButton @myButton-cliked ="auth" caption="登録" />
         <router-link :to="{ path: '/login'}">ログイン</router-link>
       </form>
     </div>
