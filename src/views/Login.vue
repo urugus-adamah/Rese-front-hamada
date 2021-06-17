@@ -14,7 +14,7 @@
 </template>
 <script>
   import Header from '../components/Header';
-  import MyButton from '../components/MyButton';
+  import MyButton from '../components/atoms/MyButton';
   export default {
     data(){
       return{

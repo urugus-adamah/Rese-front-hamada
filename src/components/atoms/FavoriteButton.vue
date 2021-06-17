@@ -8,7 +8,7 @@ export default {
 </script>
 <style scoped>
   .button-favorite{
-    background: url(../assets/img/favorite_off.png) center center no-repeat;
+    background: url(../../assets/img/favorite_off.png) center center no-repeat;
     background-size: contain;
     border: 0;
     border-radius: 70px;

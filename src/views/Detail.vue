@@ -28,7 +28,7 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import FavoriteButton from '../components/FavoriteButton';
+import FavoriteButton from '../components/atoms/FavoriteButton';
 import axios from 'axios';
 export default {
   props:[

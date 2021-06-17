@@ -36,8 +36,8 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import MyButton from '../components/MyButton';
-import FavoriteButton from '../components/FavoriteButton';
+import MyButton from '../components/atoms/MyButton';
+import FavoriteButton from '../components/atoms/FavoriteButton';
 import axios from 'axios';
 export default {
   data(){
