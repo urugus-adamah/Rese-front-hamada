@@ -1,7 +1,7 @@
 <template>
   <div class="my-page__card">
     <h2 class="card__title">登録内容</h2>
-    <form class="card__form">
+    <!-- <form class="card__form">
       <ul>
         <li>
           <MyLabel :label="name.label" :p="name.p" :type="text"/>
@@ -46,20 +46,22 @@
           <MyButton class="button--renew" caption="更新" @myButton-cliked="renew"/>
         </li>
       </ul>
-    </form>
+    </form> -->
+    <slot />
   </div>
 </template>
 <script>
-import MyLabel from '../molecules/LabelAndP';
-import MyInput from '../molecules/LabelAndInput';
-import MyButton from '../atoms/MyButton';
+// import MyLabel from '../molecules/LabelAndP';
+// import MyInput from '../molecules/LabelAndInput';
+// import MyButton from '../atoms/MyButton';
 export default {
   components:{
-    MyLabel,
-    MyButton,
-    MyInput,
+    // MyLabel,
+    // MyButton,
+    // MyInput,
   },
   data(){
+    // 親から渡されるはずのデータ
     return{
       name:{
         label:"氏名",

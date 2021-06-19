@@ -13,11 +13,25 @@
         <h1 class="my-page__title">マイページ</h1>
 
         <!-- tableの渡し方要検討 -->
-        <ListCard 
+        <!-- <ListCard 
           title="予約状況"
           button-caption="キャンセル"
           :table="reservation_table"
-        />
+
+        /> -->
+
+          <!-- <ListCard 
+            title="予約状況"
+            button-caption="キャンセル"
+            :table="reservation_table"
+            v-for="data in reservation_table.data" :key="data.id" 
+          > -->
+          <ListCard 
+            title="予約状況"
+            button-caption="キャンセル"
+            :table="reservation_table"
+          >
+          </ListCard>
 
         <!-- tableの渡し方要検討 -->
         <ListCard 
@@ -26,7 +40,7 @@
           :table="favorite_table"
         />
 
-        <!-- 各種データを親から渡すように要改修 -->
+        <!-- 各種データを親から渡すように要改良 -->
         <ResistrationInfo />
 
       </div>
@@ -62,6 +76,7 @@ export default {
         th3:"ジャンル",
         data:"",
       },
+      // items:["myslot1","myslot2"],
     };
   },
   methods:{
@@ -70,6 +85,7 @@ export default {
       const reservation_items = axios.get(url);
       const reservations = await reservation_items;
       this.reservation_table.data = reservations.data;
+      console.log(this.reservation_table.data);
     },
     async getFavoritesData(){
       const url = 'http://localhost:3000/api/v1/favorites';

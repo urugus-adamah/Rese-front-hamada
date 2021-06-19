@@ -5,7 +5,27 @@
       class="my-table"
       :button-caption="buttonCaption"
       :table="table"
-    ></MyTable>
+    >
+    <!-- <template v-for="(slotContent,slotName) of $scopedSlots" #[slotName]>
+      <slot :name="slotName"></slot>
+    </template> -->
+
+    <!-- <table>
+      <tr>
+        <td>
+          <slot name="td1"></slot>
+        </td>
+        <td>
+          <slot name="td2"></slot>
+        </td>
+        <td>
+          <slot name="td3"></slot>
+        </td>
+      </tr> -->
+
+    <!-- </table> -->
+    
+    </MyTable>
   </div>
 </template>
 <script>
