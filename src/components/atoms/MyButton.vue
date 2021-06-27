@@ -1,5 +1,5 @@
 <template>
-  <button @click.prevent="clickHandler" class="main-button">{{caption}}</button>
+  <button  @click.prevent="clickHandler" class="main-button" >{{caption}}</button>
 </template>
 <script>
 export default {
@@ -10,7 +10,7 @@ export default {
     clickHandler(){
       this.$emit('myButton-cliked');
     },
-  }
+  },
 };
 </script>
 
@@ -28,4 +28,8 @@ export default {
   .main-button:hover{
     background-color:hsl(44, 30%, 48%);
   } 
+  .main-button:disabled{
+    background-color:hsl(44, 30%, 70%);
+    cursor: auto;
+  }
 </style>

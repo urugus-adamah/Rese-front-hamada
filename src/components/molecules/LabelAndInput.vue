@@ -7,6 +7,7 @@
       :type="type" 
       :value="value" 
       @input="$emit('input',$event.target.value)" 
+      :disabled="disabled"
     />
   </div>
 </template>
@@ -17,7 +18,8 @@ export default {
     type:{
       type:String,
       default:"text",
-    }
+    },
+    disabled:Boolean,
   },
   data(){
     return {

@@ -31,17 +31,38 @@
             button-caption="キャンセル"
             :table="reservation_table"
           >
-          </ListCard>
+            <template v-slot:data_table>
+              <tr v-for="data in reservation_table.data" :key="data.id">
+                <td >{{data.date_time|formYYMMDD_HHmm}}</td>
+                <td>{{data.shop_id}}</td>
+                <td class="td_users">{{data.num_of_users}}名</td>
+                <td>
+                  <MyButton class="my-button" caption="キャンセル"/>
+                </td>
+              </tr>
+            </template>
+           </ListCard>
 
         <!-- tableの渡し方要検討 -->
         <ListCard 
           title="お気に入り"
           button-caption="削除"
           :table="favorite_table"
-        />
+        >
+          <template v-slot:data_table>
+              <tr v-for="data in favorite_table.data" :key="data.id">
+                <td>{{data.shop_id}}</td>
+                <td>{{data.area_id}}</td>
+                <td>{{data.genre_id}}</td>
+                <td>
+                  <MyButton class="my-button" caption="削除"/>
+                </td>
+              </tr>
+            </template>
+        </ListCard>
 
         <!-- 各種データを親から渡すように要改良 -->
-        <ResistrationInfo />
+        <ResistrationInfo :user="user_data"/>
 
       </div>
     </div>
@@ -49,19 +70,30 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
+import MyButton from  '../components/atoms/MyButton';
 import ListCard from '../components/organisms/ListCard';
 import ResistrationInfo from '../components/organisms/ResistrationInfoCard';
 import axios from 'axios';
+import moment from 'moment';
 export default {
   components:{
     Header,
+    MyButton,
     ListCard,
     ResistrationInfo,
   },
   created(){
+    console.log("MyPage created");
     this.getReservationData();
     this.getFavoritesData();
+    this.getUserData();
+    console.log("API read");
   },
+  filters:{
+    formYYMMDD_HHmm(value){
+        return moment(value).format("YY/MM/DD HH:mm");
+      } 
+    },
   data(){
     return{
       reservation_table:{
@@ -76,7 +108,7 @@ export default {
         th3:"ジャンル",
         data:"",
       },
-      // items:["myslot1","myslot2"],
+      user_data:"",
     };
   },
   methods:{
@@ -85,17 +117,23 @@ export default {
       const reservation_items = axios.get(url);
       const reservations = await reservation_items;
       this.reservation_table.data = reservations.data;
-      console.log(this.reservation_table.data);
     },
     async getFavoritesData(){
       const url = 'http://localhost:3000/api/v1/favorites';
       const favorite_items = axios.get(url);
       const favorites = await favorite_items;
       this.favorite_table.data = favorites.data;
+      console.log("favorite_table:", this.favorite_table.data);
     },
-
+    async getUserData(){
+      const url = 'http://localhost:3000/api/v1/users/1';
+      const user_items = axios.get(url);
+      const user = await user_items;
+      // this.$set(this.user_data,'data',user);
+      this.user_data = user.data;
+      console.log("user_data",this.user_data);
+    },
   },
-  
 };
 </script>
 <style scoped>
@@ -127,5 +165,11 @@ export default {
     margin-left: 50px;
     width: 80%;
   }
-  
+  .my-button{
+    padding: 4px;
+  }
+  .td_users{
+    text-align: right;
+    padding-right: 30px !important;
+  }
 </style>

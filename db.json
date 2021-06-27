@@ -3,8 +3,8 @@
     {
       "id": 1,
       "name": "田中",
-      "email": "tanaka@hogehoge.com",
-      "password": "hogehoge"
+      "email": "hogehoge@hoge",
+      "password": "test"
     },
     {
       "id": 2,
@@ -28,6 +28,11 @@
       "email": "hamada@hogehoge.com",
       "password": "hogehoge",
       "id": 5
+    },
+    {
+      "email": "hogea@hoge",
+      "password": "hogehoge",
+      "id": 6
     }
   ],
   "shops": [
@@ -112,20 +117,20 @@
     {
       "id": 2,
       "num_of_users": 20,
-      "date_time": "2021-05-30 18:00:00",
+      "date_time": "2021-06-3 18:00:00",
       "user_id": 2,
       "shop_id": 2
     },
     {
       "id": 3,
       "num_of_users": 50,
-      "date_time": "2021-05-30 18:00:00",
+      "date_time": "2021-06-02 19:00:00",
       "user_id": 2,
       "shop_id": 3
     },
     {
       "num_of_users": 100,
-      "date_time": "2021-05-30 18:00:00",
+      "date_time": "2021-05-30 19:00:00",
       "user_id": 3,
       "shop_id": 3,
       "id": 4
