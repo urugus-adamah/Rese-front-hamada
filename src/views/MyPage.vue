@@ -12,57 +12,33 @@
       <div class="main__my-page">
         <h1 class="my-page__title">マイページ</h1>
 
-        <!-- tableの渡し方要検討 -->
-        <!-- <ListCard 
-          title="予約状況"
-          button-caption="キャンセル"
-          :table="reservation_table"
+        <ListCard title="予約状況" :table="reservation_table">
+          <template v-slot:data_table>
+            <tr v-for="data in reservation_table.data" :key="data.id">
+              <td >{{data.date_time | formYYMMDD_HHmm}}</td>
+              <td>{{data.shop_id}}</td>
+              <td class="td_users">{{data.num_of_users}}名</td>
+              <td>
+                <MyButton class="my-button" caption="キャンセル" @myButton-cliked="deleteReservation(data.id)"/>
+              </td>
+            </tr>
+          </template>
+        </ListCard>
 
-        /> -->
-
-          <!-- <ListCard 
-            title="予約状況"
-            button-caption="キャンセル"
-            :table="reservation_table"
-            v-for="data in reservation_table.data" :key="data.id" 
-          > -->
-          <ListCard 
-            title="予約状況"
-            button-caption="キャンセル"
-            :table="reservation_table"
-          >
-            <template v-slot:data_table>
-              <tr v-for="data in reservation_table.data" :key="data.id">
-                <td >{{data.date_time|formYYMMDD_HHmm}}</td>
-                <td>{{data.shop_id}}</td>
-                <td class="td_users">{{data.num_of_users}}名</td>
-                <td>
-                  <MyButton class="my-button" caption="キャンセル"/>
-                </td>
-              </tr>
-            </template>
-           </ListCard>
-
-        <!-- tableの渡し方要検討 -->
-        <ListCard 
-          title="お気に入り"
-          button-caption="削除"
-          :table="favorite_table"
-        >
+        <ListCard title="お気に入り" :table="favorite_table">
           <template v-slot:data_table>
               <tr v-for="data in favorite_table.data" :key="data.id">
                 <td>{{data.shop_id}}</td>
                 <td>{{data.area_id}}</td>
                 <td>{{data.genre_id}}</td>
                 <td>
-                  <MyButton class="my-button" caption="削除"/>
+                  <MyButton class="my-button" caption="削除" @myButton-cliked="deleteFavorite(data.id)"/>
                 </td>
               </tr>
             </template>
         </ListCard>
 
-        <!-- 各種データを親から渡すように要改良 -->
-        <ResistrationInfo :user="user_data"/>
+        <ResistrationInfo :user-data="user_data"/>
 
       </div>
     </div>
@@ -83,11 +59,9 @@ export default {
     ResistrationInfo,
   },
   created(){
-    console.log("MyPage created");
     this.getReservationData();
     this.getFavoritesData();
     this.getUserData();
-    console.log("API read");
   },
   filters:{
     formYYMMDD_HHmm(value){
@@ -109,30 +83,56 @@ export default {
         data:"",
       },
       user_data:"",
+      id:1,
     };
   },
   methods:{
     async getReservationData(){
-      const url = 'http://localhost:3000/api/v1/reservations';
+      const url = `http://localhost:3000/api/v1/users/${this.id}/reservations`;
       const reservation_items = axios.get(url);
       const reservations = await reservation_items;
       this.reservation_table.data = reservations.data;
     },
     async getFavoritesData(){
-      const url = 'http://localhost:3000/api/v1/favorites';
+      const url = `http://localhost:3000/api/v1/users/${this.id}/favorites`;
       const favorite_items = axios.get(url);
       const favorites = await favorite_items;
       this.favorite_table.data = favorites.data;
-      console.log("favorite_table:", this.favorite_table.data);
     },
     async getUserData(){
-      const url = 'http://localhost:3000/api/v1/users/1';
+      const url = `http://localhost:3000/api/v1/users/${this.id}`;
       const user_items = axios.get(url);
       const user = await user_items;
-      // this.$set(this.user_data,'data',user);
       this.user_data = user.data;
-      console.log("user_data",this.user_data);
     },
+    deleteReservation(){
+      if(confirm("この予約をキャンセルしますか？")){
+        const url = `http://localhost:3000/api/v1/reservations/${this.id}`;
+        axios
+          .delete(url)
+          .then((response)=>{
+            console.log(response);
+            this.reload();
+          });
+      }
+    },
+    deleteFavorite(){
+      if(confirm("このお店をお気に入りから外しますか？")){
+        const url = `http://localhost:3000/api/v1/favorites/${this.id}`;
+        axios
+          .delete(url)
+          .then((response)=>{
+            console.log(response);
+            this.reload();
+          });
+      }
+    },
+    reload(){
+      this.$router.go({
+        path:this.$router.currentRoute.path,
+        force:true,
+      });
+    }
   },
 };
 </script>
