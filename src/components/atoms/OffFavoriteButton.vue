@@ -1,21 +1,14 @@
 <template>
-<!-- ボタンの画像URLの渡し方要確認 -->
-  <button><img class="button-favorite" alt="お気に入りボタン"></button>
+  <button class="button-favorite"></button>
 </template>
 <script>
 export default {
-  props:{
-    imageUrl:String,
-  },
-  computed:{
-    backgroundUrl(){
-      return this.imageUrl;
-    }
-  }
+
 }
 </script>
 <style scoped>
   .button-favorite{
+    background: url(../../assets/img/favorite_off.png) center center no-repeat;
     background-size: contain;
     border: 0;
     border-radius: 70px;

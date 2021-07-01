@@ -6,7 +6,7 @@
         <img :src="shop.img_url" alt="shop-image">
         <p class="item__shop-name">{{shop.name}}</p>
         <p>{{area.name}} / {{genre.name}}</p>
-        <FavoriteButton class="item__button-favorite" />
+        <OffFavoriteButton class="item__button-favorite" />
       </div>
       <p class="shops__description">{{shop.description}}</p>
       <div class="form-reservation">
@@ -28,7 +28,7 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import FavoriteButton from '../components/atoms/FavoriteButton';
+import OffFavoriteButton from '../components/atoms/OffFavoriteButton';
 import axios from 'axios';
 export default {
   props:[
@@ -43,7 +43,7 @@ export default {
   },
   components:{
     Header,
-    FavoriteButton,
+    OffFavoriteButton,
   },
   async created(){
     //methodsへ記述、並列処理

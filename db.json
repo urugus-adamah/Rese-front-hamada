@@ -64,6 +64,14 @@
       "genre_id": 3,
       "description": "素材の旨味を存分に引き出す為に、塩焼を中心としたお店です。比内地鶏を中心に、厳選素材を職人が備長炭で豪快に焼き上げます。清潔な内装に包まれた大人の隠れ家で贅沢で優雅な時間をお過ごし下さい。",
       "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg"
+    },
+    {
+      "id": 4,
+      "name": "三子",
+      "area_id": 2,
+      "genre_id": 1,
+      "description": "最高級の美味しいお肉で日々の疲れを軽減していただければと贅沢にサーロインを盛り込んだ御膳をご用意しております。",
+      "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg"
     }
   ],
   "areas": [

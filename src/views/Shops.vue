@@ -3,41 +3,37 @@
     <Header />
     <div class="main">
       <nav class="main__nav">
-        <div class="nav__card">
-          <p class="card__label">場所</p>
-          <select name="area" class="card__select--area">
-            <option value=""></option>
-            <option v-for="(area,id) in areas" :key=id :value="area.name">{{area.name}}</option>
-          </select>
-          <p class="card__label">ジャンル</p>
-          <select name="genre" class="card__select--genre">
-            <option value=""></option>
-            <option v-for="(genre,id) in genres" :key="id" :value="genre.name">{{genre.name}}</option>
-          </select>
-          <MyButton class="button--search" :caption="search" />
-        </div>
-        <div class="nav__wrap">
-          <input class="input--shop-name" type="text" placeholder="店名で探す">
-          <MyButton class="button--search" :caption="search" />
-        </div>
+        <AreaAndGenreSearcher 
+          :areas-data="areas" 
+          :genres-data="genres"
+          @button-clicked="filteringAreaGenre"
+          @selectedArea="getArea"
+          @selectedGenre="getGenre"
+        />
+
+        <ShopsSearcher />
       </nav>
+
       <div class="main__shops-page">
         <div v-for="(shop,id) in shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
             <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>
             <p>{{areas[shop.area_id].name}} / {{genres[shop.genre_id-1].name}}</p>
-            <FavoriteButton class="item__button-favorite" />
+
+            <OnFavoriteButton class="item__button-favorite" />
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import MyButton from '../components/atoms/MyButton';
-import FavoriteButton from '../components/atoms/FavoriteButton';
+import OnFavoriteButton from '../components/molecules/OnFavorite';
+import AreaAndGenreSearcher from '../components/molecules/AreaAndGenreSearcher';
+import ShopsSearcher from '../components/molecules/ShopsSearcher';
 import axios from 'axios';
 export default {
   data(){
@@ -46,17 +42,37 @@ export default {
       shops:"",
       areas:"",
       genres:"",
+      area_id:"",
+      genre_id:"",
     };
   },
   components:{
     Header,
-    MyButton,
-    FavoriteButton,
+    // MyButton,
+    OnFavoriteButton,
+    AreaAndGenreSearcher,
+    ShopsSearcher,
   },
   created(){
     this.getShopsData();
   },
   methods:{
+    filteringAreaGenre(){
+      const shops =
+       this.shops.filter(
+          function (value) {
+            return value.area_id === this.area_id;
+          }
+        )
+      this.shops = shops;
+      console.log(this.shops);
+    },
+    getArea(value){
+      this.area_id = value-1;
+    },
+    getGenre(value){
+      this.genre_id = value-1;
+    },
     async getShopsData(){
       const url_shop = 'http://localhost:3000/api/v1/shops';
       const url_area = 'http://localhost:3000/api/v1/areas';
