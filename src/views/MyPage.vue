@@ -16,10 +16,10 @@
           <template v-slot:data_table>
             <tr v-for="data in reservation_table.data" :key="data.id">
               <td >{{data.date_time | formYYMMDD_HHmm}}</td>
-              <td>{{data.shop_id}}</td>
+              <td>{{data.shop.name}}</td>
               <td class="td_users">{{data.num_of_users}}名</td>
               <td>
-                <MyButton class="my-button" caption="キャンセル" @myButton-cliked="deleteReservation(data.id)"/>
+                <MyButton class="my-button" caption="キャンセル" @myButton-cliked="deleteReservation(data.id, data.shop_id)"/>
               </td>
             </tr>
           </template>
@@ -28,11 +28,11 @@
         <ListCard title="お気に入り" :table="favorite_table">
           <template v-slot:data_table>
               <tr v-for="data in favorite_table.data" :key="data.id">
-                <td>{{data.shop_id}}</td>
-                <td>{{data.area_id}}</td>
-                <td>{{data.genre_id}}</td>
+                <td>{{data.shop.name}}</td>
+                <td>{{data.shop.area.name}}</td>
+                <td>{{data.shop.genre.name}}</td>
                 <td>
-                  <MyButton class="my-button" caption="削除" @myButton-cliked="deleteFavorite(data.id)"/>
+                  <MyButton class="my-button" caption="削除" @myButton-cliked="deleteFavorite(data.shop_id)"/>
                 </td>
               </tr>
             </template>
@@ -88,26 +88,27 @@ export default {
   },
   methods:{
     async getReservationData(){
-      const url = `http://localhost:3000/api/v1/users/${this.id}/reservations`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}/reservations`;
       const reservation_items = axios.get(url);
       const reservations = await reservation_items;
-      this.reservation_table.data = reservations.data;
+      this.reservation_table.data = reservations.data.data;
     },
     async getFavoritesData(){
-      const url = `http://localhost:3000/api/v1/users/${this.id}/favorites`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}/favorites`;
       const favorite_items = axios.get(url);
       const favorites = await favorite_items;
-      this.favorite_table.data = favorites.data;
+      console.log("favorites=",favorites.data.data);
+      this.favorite_table.data = favorites.data.data;
     },
     async getUserData(){
-      const url = `http://localhost:3000/api/v1/users/${this.id}`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}`;
       const user_items = axios.get(url);
       const user = await user_items;
-      this.user_data = user.data;
+      this.user_data = user.data.data;
     },
-    deleteReservation(){
+    deleteReservation(id, shop_id){
       if(confirm("この予約をキャンセルしますか？")){
-        const url = `http://localhost:3000/api/v1/reservations/${this.id}`;
+        const url = `http://127.0.0.1:8000/api/v1/shops/${shop_id}/reservations/${id}`;
         axios
           .delete(url)
           .then((response)=>{
@@ -116,11 +117,17 @@ export default {
           });
       }
     },
-    deleteFavorite(){
+    deleteFavorite(shop_id){
       if(confirm("このお店をお気に入りから外しますか？")){
-        const url = `http://localhost:3000/api/v1/favorites/${this.id}`;
         axios
-          .delete(url)
+          // .delete(url, {data:{user}})
+          .request({
+            method:"delete",
+            url:`http://127.0.0.1:8000/api/v1/shops/${shop_id}/favorites`,
+            data:{
+              user_id:this.id,
+            },
+          })
           .then((response)=>{
             console.log(response);
             this.reload();

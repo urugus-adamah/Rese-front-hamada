@@ -1,6 +1,6 @@
 <template>
 <!-- ボタンの画像URLの渡し方要確認 -->
-  <button><img class="button-favorite" alt="お気に入りボタン"></button>
+  <button><img :src="require(`@/assets/img/${imageUrl}`)" class="button-favorite" alt="お気に入りボタン"></button>
 </template>
 <script>
 export default {
@@ -11,7 +11,7 @@ export default {
     backgroundUrl(){
       return this.imageUrl;
     }
-  }
+  },
 }
 </script>
 <style scoped>

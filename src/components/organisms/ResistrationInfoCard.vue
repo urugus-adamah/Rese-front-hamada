@@ -159,12 +159,12 @@ export default {
     async renreRegisteredContent(){
       if(confirm("登録内容を更新しますか?")){
         if(this.isUpdatable()){
-          const url = `http://localhost:3000/api/v1/users/${this.user.id}`;
           await axios
-            .put(
-              url,
-              this.getNewRegisteredContent()
-            )
+            .request({
+              method:"put",
+              url:`http://127.0.0.1:8000/api/v1/users/${this.user.id}`,
+              data:this.getNewRegisteredContent(),
+            })
             .then((response)=>{
               console.log(response); 
               alert("更新しました");

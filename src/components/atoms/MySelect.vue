@@ -1,7 +1,7 @@
 <template>
   <select v-model="selected"  name="value" class="card__select" @change="changedSelect">
     <option value=""></option>
-    <option v-for="(value,id) in optionValues" :key=id :value="value.id" >{{value.name}}</option>
+    <option v-for="(value) in optionValues" :key="value.index" :value="value" >{{value}}</option>
   </select>
 </template>
 <script>

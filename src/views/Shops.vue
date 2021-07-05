@@ -6,26 +6,37 @@
         <AreaAndGenreSearcher 
           :areas-data="areas" 
           :genres-data="genres"
-          @button-clicked="filteringAreaGenre"
+          @button-clicked="searchByAreaGenre"
           @selectedArea="getArea"
           @selectedGenre="getGenre"
         />
 
-        <ShopsSearcher />
+        <ShopsSearcher 
+          :value="filter_shop_name"
+          @input="filter_shop_name = $event"
+          @button-clicked="searchByShopName"
+          />
       </nav>
+      
 
       <div class="main__shops-page">
+          <button
+            v-for="(item,id) in filter_list"
+            :key="id"
+            class="unfilter-button"
+            @click="unfilter(item)">
+            {{item}} ×
+          </button>
+
         <div v-for="(shop,id) in shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
             <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>
-            <p>{{areas[shop.area_id].name}} / {{genres[shop.genre_id-1].name}}</p>
-
+            <p>{{shop.area.name}} / {{shop.genre.name}}</p>
             <OnFavoriteButton class="item__button-favorite" />
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -38,17 +49,18 @@ import axios from 'axios';
 export default {
   data(){
     return{
-      search:"検索",
       shops:"",
-      areas:"",
-      genres:"",
-      area_id:"",
-      genre_id:"",
+      areas:[],
+      genres:[],
+      filter_list:[],
+      selected_area:"",
+      selected_genre:"",
+      filter_shop_name:"",
+      user_id:1
     };
   },
   components:{
     Header,
-    // MyButton,
     OnFavoriteButton,
     AreaAndGenreSearcher,
     ShopsSearcher,
@@ -56,47 +68,103 @@ export default {
   created(){
     this.getShopsData();
   },
-  methods:{
+  computed:{
     filteringAreaGenre(){
-      const shops =
-       this.shops.filter(
-          function (value) {
-            return value.area_id === this.area_id;
-          }
-        )
-      this.shops = shops;
+      return function(){
+        if(!this.selected_area && !this.selected_genre){
+          this.getShopsData();
+          return this.shops;
+        }else{
+          const shops=[];
+          this.shops.forEach(shop => {
+            if(shop.area.name.indexOf(this.selected_area)!== -1
+               && shop.genre.name.indexOf(this.selected_genre)!== -1){
+              shops.push(shop);
+              this.setFilterList(this.selected_area,this.selected_genre,this.filter_shop_name);
+            }
+          });
+          return shops;
+        }
+      }
+    },
+    filteringShop(){
+      return function(){
+        if(!this.filter_shop_name){
+          this.getShopsData();
+          return this.shops;
+        }else{
+          const shops=[];
+          this.shops.forEach(shop => {
+            if(shop.name.indexOf(this.filter_shop_name)!== -1){
+              shops.push(shop);
+              this.setFilterList(this.selected_area,this.selected_genre,this.filter_shop_name);
+            }
+          });
+          return shops;
+        }
+      }
+    }
+  },
+  methods:{
+    unfilter(item){
+      const index = this.filter_list.indexOf(item);
+      this.filter_list.splice(index,1);
+    },
+    setFilterList(area,genre,shop){
+      const array = [area,genre,shop];
+      this.filter_list = array.filter(v => v)
+    },
+    searchByShopName(){
+      this.shops = this.filteringShop();
+      
+      if(this.shops.length == 0){
+        alert("該当するお店がありませんでした。");
+        this.filter_list={};
+        this.getShopsData();
+      }
+      console.log(this.shops);
+    },
+    searchByAreaGenre(){
+      this.shops = this.filteringAreaGenre();
+      if(this.shops.length == 0){
+        alert("該当するお店がありませんでした。");
+        this.filter_list={};
+        this.getShopsData();
+      }
       console.log(this.shops);
     },
     getArea(value){
-      this.area_id = value-1;
+      this.selected_area = value;
     },
     getGenre(value){
-      this.genre_id = value-1;
+      this.selected_genre = value;
     },
     async getShopsData(){
-      const url_shop = 'http://localhost:3000/api/v1/shops';
-      const url_area = 'http://localhost:3000/api/v1/areas';
-      const url_genre = 'http://localhost:3000/api/v1/genres';
+      const url_shop = 'http://127.0.0.1:8000/api/v1/shops';
       const shop_items = axios.get(url_shop);
-      const areas_items = axios.get(url_area);
-      const genre_items = axios.get(url_genre);
       const data_shops = await shop_items;
-      const data_areas = await areas_items;
-      const data_genres = await genre_items;
-      this.shops = data_shops.data;
-      this.areas = data_areas.data;
-      this.genres = data_genres.data;
+      this.shops = data_shops.data.data;
+      this.shops.forEach(item => {
+        this.createTableFromKeyword(this.areas, item.area.name);       
+        this.createTableFromKeyword(this.genres, item.genre.name);
+      });
     },
-    moveShop(id){
+    createTableFromKeyword(target_table, keyword){
+      if(target_table.indexOf(keyword) == -1){
+        target_table.push(keyword);
+      }
+    },
+    moveShop(shop_id){
       this.$router.push({
-        path:'/detail/' + id,
-        params:{id:id},
+        path:'/detail/' + shop_id,
+        params:{id:shop_id},
       });
     }
   },
 };
 </script>
 <style scoped>
+
   .main{
     background-color: #FDFDFD;
     display: flex;
@@ -172,5 +240,24 @@ export default {
   
   .input--shop-name{
     margin-bottom: 15px;
+  }
+  .main__shops-page__filter{
+    display: flex;
+  }
+  .unfilter-button{
+    background-color:transparent;
+    border-color: transparent;
+    font-size: 14px;
+    height: 20px;
+    line-height: 14px;
+    margin: 10px 0 10px 10px;
+
+  }
+  .unfilter-button:hover{
+    background-color: #ccc;
+    border-radius: 5px;
+    color: #fefefe;
+    cursor: pointer;
+    transition-duration: 0.2s;
   }
 </style>

@@ -9,7 +9,7 @@ export default {
   },
   data(){
     return {
-      image_url:"../../assets/img/favorite_on.png"
+      image_url:"favorite_on.png"
     }
   }
 }
