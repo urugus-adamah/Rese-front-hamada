@@ -51,7 +51,7 @@ export default {
   .nav__card{
     background-color: #EDE2D6;
     border-radius: 10px;
-    margin: 30px 0;
+    margin: 20px 0;
     padding: 15px;
     text-align: left;
     margin-right: auto;

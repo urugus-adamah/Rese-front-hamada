@@ -12,16 +12,15 @@
         />
 
         <ShopsSearcher 
-          :value="filter_shop_name"
-          @input="filter_shop_name = $event"
+          :value="search_word_list.shop"
+          @input="search_word_list.shop = $event"
           @button-clicked="search"
           />
       </nav>
-      
-
       <div class="main__shops-page">
+        <div class="main__shops-page__filter">
           <button
-            v-for="(item,id) in un_filter_list"
+            v-for="(item,id) in filtering_list"
             :key="id"
             class="unfilter-button"
             @click="unfilter(item)"
@@ -29,6 +28,7 @@
             >
             {{item}} ×
           </button>
+        </div>
 
         <div v-for="(shop,id) in filtered_shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
@@ -55,16 +55,14 @@ export default {
       filtered_shops:"",
       areas:[],
       genres:[],
-      filter_list:{
+      search_word_list:{
         area:"",
         genre:"",
         shop:"",
       },
-      un_filter_list:{},
-      selected_area:"",
-      selected_genre:"",
-      filter_shop_name:"",
-      user_id:1
+      filtering_list:{},
+      user_id:1,
+      class_name:"main__shops-page__filter",
     };
   },
   components:{
@@ -77,7 +75,7 @@ export default {
     this.getShopsData();
   },
   computed:{
-    getFilterdShops(){
+    getFilteredShops(){
       return function(filter){
           const shops=[];
           this.all_shops.forEach(shop => {
@@ -91,51 +89,31 @@ export default {
         // }
       }
     },
-    noBlanksFilterList(){
-      return function(){
-        const list = this.un_filter_list;
-        for(let i in this.un_filter_list){
-          if(list[i] === ""){
-            delete list[i];
-          }
-        }
-        return list;
-      }
-    },
   },
+
   methods:{
     unfilter(value){
-      for(let i in this.un_filter_list){
-        if(this.un_filter_list[i] === value){
-          this.un_filter_list[i] = "";
+      for(let i in this.filtering_list){
+        if(this.filtering_list[i] === value){
+          this.filtering_list[i] = "";
         }
       }
-      this.filtered_shops = this.getFilterdShops(this.un_filter_list);
-    },
-    setFilterList(){
-      this.filter_list = {
-        area:this.selected_area,
-        genre:this.selected_genre,
-        shop:this.filter_shop_name
-      };
-      this.un_filter_list = Object.assign({},this.filter_list);
-      // this.noBlanksFilterList();
+      this.filtered_shops = this.getFilteredShops(this.filtering_list);
     },
     search(){
-      this.setFilterList();
-      this.filtered_shops = this.getFilterdShops(this.filter_list);
+      this.filtering_list = Object.assign({},this.search_word_list);
+      this.filtered_shops = this.getFilteredShops(this.search_word_list);
       if(this.filtered_shops.length == 0){
         alert("該当するお店がありませんでした。");
-        this.filter_list={};
-        this.un_filter_list={};
+        this.filtering_list={};
         this.filtered_shops = this.all_shops;
       }
     },
     getArea(value){
-      this.selected_area = value;
+      this.search_word_list.area = value;
     },
     getGenre(value){
-      this.selected_genre = value;
+      this.search_word_list.genre = value;
     },
     async getShopsData(){
       const url_shop = 'http://127.0.0.1:8000/api/v1/shops';
@@ -146,7 +124,7 @@ export default {
         this.createTableFromKeyword(this.areas, item.area.name);       
         this.createTableFromKeyword(this.genres, item.genre.name);
       });
-      this.filtered_shops = this.all_shops;
+      this.filtered_shops = Object.assign({},this.all_shops);
     },
     createTableFromKeyword(target_table, keyword){
       if(target_table.indexOf(keyword) == -1){
@@ -173,10 +151,7 @@ export default {
     text-align: right;
     width: 30%;
   }
-  .main__nav ul{
-    display: inline-block;  
-    margin-top: 70px;
-  }
+
   .main__shops-page{
     margin: 0 auto;
   }
@@ -184,24 +159,14 @@ export default {
     display: block;   
   }
 
-  .shops__item, .nav__card{
+  .shops__item{
     background-color: #EDE2D6;
     border-radius: 10px;
-    margin: 30px 0;
+    /* margin: 20px 0; */
+    margin-bottom: 20px;
     padding: 15px;
     text-align: left;
-  }
-  .nav__card, .nav__wrap{
-    margin-right: auto;
-    margin-left: auto;
-    width: 50%;
-  }
-
-  .nav__card p{
-    padding-bottom: 5px;
-  }
-  .shops__item{
-    cursor: pointer;
+      cursor: pointer;
     position: relative;
     height: 480px;
     width: 580px;
@@ -242,18 +207,23 @@ export default {
   }
   .main__shops-page__filter{
     display: flex;
+    background-color: #eee;
+    border-radius: 5px;
+    /* margin-top: 20px; */
+    margin: 20px 0;
   }
+
   .unfilter-button{
     background-color:transparent;
     border-color: transparent;
     font-size: 14px;
     height: 20px;
     line-height: 14px;
-    margin: 10px 0 0 10px;
+    margin: 5px 0 5px 10px;
 
   }
   .unfilter-button:hover{
-    background-color: #ccc;
+    background-color: #aaa;
     border-radius: 5px;
     color: #fefefe;
     cursor: pointer;
