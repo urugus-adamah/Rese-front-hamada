@@ -6,7 +6,7 @@
         <AreaAndGenreSearcher 
           :areas-data="areas" 
           :genres-data="genres"
-          @button-clicked="searchByAreaGenre"
+          @button-clicked="search"
           @selectedArea="getArea"
           @selectedGenre="getGenre"
         />
@@ -14,21 +14,23 @@
         <ShopsSearcher 
           :value="filter_shop_name"
           @input="filter_shop_name = $event"
-          @button-clicked="searchByShopName"
+          @button-clicked="search"
           />
       </nav>
       
 
       <div class="main__shops-page">
           <button
-            v-for="(item,id) in filter_list"
+            v-for="(item,id) in un_filter_list"
             :key="id"
             class="unfilter-button"
-            @click="unfilter(item)">
+            @click="unfilter(item)"
+            v-show="item !== ''"
+            >
             {{item}} ×
           </button>
 
-        <div v-for="(shop,id) in shops" :key="id" >
+        <div v-for="(shop,id) in filtered_shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
             <img :src="shop.img_url" alt="shop-image">
             <p class="item__shop-name">{{shop.name}}</p>
@@ -49,10 +51,16 @@ import axios from 'axios';
 export default {
   data(){
     return{
-      shops:"",
+      all_shops:"",
+      filtered_shops:"",
       areas:[],
       genres:[],
-      filter_list:[],
+      filter_list:{
+        area:"",
+        genre:"",
+        shop:"",
+      },
+      un_filter_list:{},
       selected_area:"",
       selected_genre:"",
       filter_shop_name:"",
@@ -69,69 +77,59 @@ export default {
     this.getShopsData();
   },
   computed:{
-    filteringAreaGenre(){
-      return function(){
-        if(!this.selected_area && !this.selected_genre){
-          this.getShopsData();
-          return this.shops;
-        }else{
+    getFilterdShops(){
+      return function(filter){
           const shops=[];
-          this.shops.forEach(shop => {
-            if(shop.area.name.indexOf(this.selected_area)!== -1
-               && shop.genre.name.indexOf(this.selected_genre)!== -1){
-              shops.push(shop);
-              this.setFilterList(this.selected_area,this.selected_genre,this.filter_shop_name);
-            }
+          this.all_shops.forEach(shop => {
+            if(shop.area.name.indexOf(filter.area)!== -1
+               && shop.genre.name.indexOf(filter.genre)!== -1
+               && shop.name.indexOf(filter.shop)!== -1){
+                shops.push(shop);
+              }
           });
           return shops;
-        }
+        // }
       }
     },
-    filteringShop(){
+    noBlanksFilterList(){
       return function(){
-        if(!this.filter_shop_name){
-          this.getShopsData();
-          return this.shops;
-        }else{
-          const shops=[];
-          this.shops.forEach(shop => {
-            if(shop.name.indexOf(this.filter_shop_name)!== -1){
-              shops.push(shop);
-              this.setFilterList(this.selected_area,this.selected_genre,this.filter_shop_name);
-            }
-          });
-          return shops;
+        const list = this.un_filter_list;
+        for(let i in this.un_filter_list){
+          if(list[i] === ""){
+            delete list[i];
+          }
         }
+        return list;
       }
-    }
+    },
   },
   methods:{
-    unfilter(item){
-      const index = this.filter_list.indexOf(item);
-      this.filter_list.splice(index,1);
+    unfilter(value){
+      for(let i in this.un_filter_list){
+        if(this.un_filter_list[i] === value){
+          this.un_filter_list[i] = "";
+        }
+      }
+      this.filtered_shops = this.getFilterdShops(this.un_filter_list);
     },
-    setFilterList(area,genre,shop){
-      const array = [area,genre,shop];
-      this.filter_list = array.filter(v => v)
+    setFilterList(){
+      this.filter_list = {
+        area:this.selected_area,
+        genre:this.selected_genre,
+        shop:this.filter_shop_name
+      };
+      this.un_filter_list = Object.assign({},this.filter_list);
+      // this.noBlanksFilterList();
     },
-    searchByShopName(){
-      this.shops = this.filteringShop();
-      
-      if(this.shops.length == 0){
+    search(){
+      this.setFilterList();
+      this.filtered_shops = this.getFilterdShops(this.filter_list);
+      if(this.filtered_shops.length == 0){
         alert("該当するお店がありませんでした。");
         this.filter_list={};
-        this.getShopsData();
+        this.un_filter_list={};
+        this.filtered_shops = this.all_shops;
       }
-      console.log(this.shops);
-    },
-    searchByAreaGenre(){
-      this.shops = this.filteringAreaGenre();
-      if(this.shops.length == 0){
-        alert("該当するお店がありませんでした。");
-        this.filter_list={};
-        this.getShopsData();
-      }
-      console.log(this.shops);
     },
     getArea(value){
       this.selected_area = value;
@@ -143,11 +141,12 @@ export default {
       const url_shop = 'http://127.0.0.1:8000/api/v1/shops';
       const shop_items = axios.get(url_shop);
       const data_shops = await shop_items;
-      this.shops = data_shops.data.data;
-      this.shops.forEach(item => {
+      this.all_shops = data_shops.data.data;
+      this.all_shops.forEach(item => {
         this.createTableFromKeyword(this.areas, item.area.name);       
         this.createTableFromKeyword(this.genres, item.genre.name);
       });
+      this.filtered_shops = this.all_shops;
     },
     createTableFromKeyword(target_table, keyword){
       if(target_table.indexOf(keyword) == -1){
@@ -250,7 +249,7 @@ export default {
     font-size: 14px;
     height: 20px;
     line-height: 14px;
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 0 10px;
 
   }
   .unfilter-button:hover{
