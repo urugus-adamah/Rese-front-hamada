@@ -15,20 +15,11 @@
           :value="search_word_list.shop"
           @input="search_word_list.shop = $event"
           @button-clicked="search"
-          />
+        />
       </nav>
+
       <div class="main__shops-page">
-        <div class="main__shops-page__filter">
-          <button
-            v-for="(item,id) in filtering_list"
-            :key="id"
-            class="unfilter-button"
-            @click="unfilter(item)"
-            v-show="item !== ''"
-            >
-            {{item}} ×
-          </button>
-        </div>
+        <UnfilterBar :filtering-list="filtering_list" @clickedItem="unfilter" />
 
         <div v-for="(shop,id) in filtered_shops" :key="id" >
           <div @click="moveShop(shop.id)" class="shops__item">
@@ -38,6 +29,7 @@
             <OnFavoriteButton class="item__button-favorite" />
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -47,6 +39,7 @@ import Header from '../components/HeaderWithNav';
 import OnFavoriteButton from '../components/molecules/OnFavorite';
 import AreaAndGenreSearcher from '../components/molecules/AreaAndGenreSearcher';
 import ShopsSearcher from '../components/molecules/ShopsSearcher';
+import UnfilterBar from '../components/molecules/UnfilterBar'
 import axios from 'axios';
 export default {
   data(){
@@ -62,7 +55,6 @@ export default {
       },
       filtering_list:{},
       user_id:1,
-      class_name:"main__shops-page__filter",
     };
   },
   components:{
@@ -70,6 +62,7 @@ export default {
     OnFavoriteButton,
     AreaAndGenreSearcher,
     ShopsSearcher,
+    UnfilterBar,
   },
   created(){
     this.getShopsData();
@@ -77,24 +70,22 @@ export default {
   computed:{
     getFilteredShops(){
       return function(filter){
-          const shops=[];
-          this.all_shops.forEach(shop => {
-            if(shop.area.name.indexOf(filter.area)!== -1
-               && shop.genre.name.indexOf(filter.genre)!== -1
-               && shop.name.indexOf(filter.shop)!== -1){
-                shops.push(shop);
-              }
-          });
-          return shops;
-        // }
+        const shops=[];
+        this.all_shops.forEach(shop => {
+          if(shop.area.name.indexOf(filter.area)!== -1
+              && shop.genre.name.indexOf(filter.genre)!== -1
+              && shop.name.indexOf(filter.shop)!== -1){
+              shops.push(shop);
+            }
+        });
+        return shops;
       }
     },
   },
-
   methods:{
-    unfilter(value){
+    unfilter(item){
       for(let i in this.filtering_list){
-        if(this.filtering_list[i] === value){
+        if(this.filtering_list[i] === item){
           this.filtering_list[i] = "";
         }
       }
@@ -105,8 +96,7 @@ export default {
       this.filtered_shops = this.getFilteredShops(this.search_word_list);
       if(this.filtered_shops.length == 0){
         alert("該当するお店がありませんでした。");
-        this.filtering_list={};
-        this.filtered_shops = this.all_shops;
+        this.resetFilter();
       }
     },
     getArea(value){
@@ -124,12 +114,16 @@ export default {
         this.createTableFromKeyword(this.areas, item.area.name);       
         this.createTableFromKeyword(this.genres, item.genre.name);
       });
-      this.filtered_shops = Object.assign({},this.all_shops);
+      this.resetFilter();
     },
     createTableFromKeyword(target_table, keyword){
       if(target_table.indexOf(keyword) == -1){
         target_table.push(keyword);
       }
+    },
+    resetFilter(){
+      this.filtering_list={};
+      this.filtered_shops = Object.assign({},this.all_shops);
     },
     moveShop(shop_id){
       this.$router.push({
@@ -141,7 +135,6 @@ export default {
 };
 </script>
 <style scoped>
-
   .main{
     background-color: #FDFDFD;
     display: flex;
@@ -190,43 +183,7 @@ export default {
     font-size: 36px;
     margin-bottom: 15px;
   }
-  .item__area-genre{
-    display: flex;
-  }
-  .card__select--area, .card__select--genre {
-    box-sizing: border-box;
-    width: 100%;
-    border-radius: 5px;
-    border: 1px solid #CCC ;
-    margin-bottom: 15px;
-    padding: 10px;
-  }
-  
   .input--shop-name{
     margin-bottom: 15px;
-  }
-  .main__shops-page__filter{
-    display: flex;
-    background-color: #eee;
-    border-radius: 5px;
-    /* margin-top: 20px; */
-    margin: 20px 0;
-  }
-
-  .unfilter-button{
-    background-color:transparent;
-    border-color: transparent;
-    font-size: 14px;
-    height: 20px;
-    line-height: 14px;
-    margin: 5px 0 5px 10px;
-
-  }
-  .unfilter-button:hover{
-    background-color: #aaa;
-    border-radius: 5px;
-    color: #fefefe;
-    cursor: pointer;
-    transition-duration: 0.2s;
   }
 </style>

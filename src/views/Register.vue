@@ -56,7 +56,7 @@
     methods:{
       auth(){
         if (this.isValidForm()) {
-          const url = "http://localhost:3000/api/v1/register";
+          const url = "http://127.0.0.1:8000/api/v1/register";
           axios
             .post(url,{
               name:this.name,
