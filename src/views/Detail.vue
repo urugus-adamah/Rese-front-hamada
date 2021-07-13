@@ -30,7 +30,7 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import OnFavorite from '../components/molecules/OnFavorite';
+import OnFavorite from '../components/atoms/OnFavorite';
 import axios from 'axios';
 import moment from 'moment';
 export default {

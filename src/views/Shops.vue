@@ -22,11 +22,15 @@
         <UnfilterBar :filtering-list="filtering_list" @clickedItem="unfilter" />
 
         <div v-for="(shop,id) in filtered_shops" :key="id" >
-          <div @click="moveShop(shop.id)" class="shops__item">
-            <img :src="shop.img_url" alt="shop-image">
+          <div class="shops__item">
+            <img :src="shop.img_url" alt="shop-image" @click="moveShop(shop.id)">
             <p class="item__shop-name">{{shop.name}}</p>
             <p>{{shop.area.name}} / {{shop.genre.name}}</p>
-            <OnFavoriteButton class="item__button-favorite" />
+
+            <FavoriteButton
+              :is-favorite="myFavorites(shop.id)" 
+              @changeFavorite="changeFavorite(myFavorites(shop.id), shop.id)"
+            />
           </div>
         </div>
 
@@ -36,7 +40,7 @@
 </template>
 <script>
 import Header from '../components/HeaderWithNav';
-import OnFavoriteButton from '../components/molecules/OnFavorite';
+import FavoriteButton from  '../components/molecules/Favorite';
 import AreaAndGenreSearcher from '../components/molecules/AreaAndGenreSearcher';
 import ShopsSearcher from '../components/molecules/ShopsSearcher';
 import UnfilterBar from '../components/molecules/UnfilterBar'
@@ -44,8 +48,8 @@ import axios from 'axios';
 export default {
   data(){
     return{
-      all_shops:"",
-      filtered_shops:"",
+      all_shops:[],
+      filtered_shops:[],
       areas:[],
       genres:[],
       search_word_list:{
@@ -54,12 +58,13 @@ export default {
         shop:"",
       },
       filtering_list:{},
+      favorites:[],
       user_id:1,
     };
   },
   components:{
     Header,
-    OnFavoriteButton,
+    FavoriteButton,
     AreaAndGenreSearcher,
     ShopsSearcher,
     UnfilterBar,
@@ -68,6 +73,11 @@ export default {
     this.getShopsData();
   },
   computed:{
+    myFavorites(){
+      return function(shop_id){        
+        return this.favorites.find((v)=> v.id === shop_id).is_favorite;
+      }
+    },
     getFilteredShops(){
       return function(filter){
         const shops=[];
@@ -83,6 +93,47 @@ export default {
     },
   },
   methods:{
+    createFavoritesList(){
+      this.favorites = [];
+      let is_favorite;
+      for(let shop of this.all_shops){
+        const favorites = shop.favorites;
+        const is_exist_favorites = favorites.length > 0;
+        const is_favorite_user = favorites.some((item) => item.pivot.user_id === this.user_id);
+        if(is_exist_favorites && is_favorite_user){
+          is_favorite = true;
+        }else{
+          is_favorite = false;
+        }
+        const object = {
+          id:shop.id,
+          is_favorite:is_favorite,
+        }
+        this.favorites.push(object);
+      }
+    },
+    changeFavorite(is_favorite, shop_id){
+      const url = `http://127.0.0.1:8000/api/v1/shops/${shop_id}/favorites`;
+      const index = this.favorites.findIndex((v)=> v.id === shop_id);
+      if(is_favorite){
+        axios({
+          method:"delete",
+          url:url,
+          data:{
+            user_id:this.user_id,
+          }
+        }).then((response)=>{
+          console.log(response);
+        });
+      }else{
+        axios
+          .put(url, {user_id:this.user_id})
+          .then((response)=>{
+            console.log(response);
+          });
+      }
+      this.favorites.splice(index, 1, {id:shop_id, is_favorite:!is_favorite});
+    },
     unfilter(item){
       for(let i in this.filtering_list){
         if(this.filtering_list[i] === item){
@@ -115,6 +166,7 @@ export default {
         this.createTableFromKeyword(this.genres, item.genre.name);
       });
       this.resetFilter();
+      this.createFavoritesList();
     },
     createTableFromKeyword(target_table, keyword){
       if(target_table.indexOf(keyword) == -1){
@@ -173,11 +225,11 @@ export default {
     margin:0 auto 15px auto;
     width: 100%;
   }
-  .item__button-favorite{
+  /* .item__button-favorite{
     position: absolute;
     right: 20px;
     top: 20px;
-  }
+  } */
   .item__shop-name{
     font-family: 'Meiryo';
     font-size: 36px;
