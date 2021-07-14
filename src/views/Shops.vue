@@ -28,12 +28,14 @@
             <p>{{shop.area.name}} / {{shop.genre.name}}</p>
 
             <FavoriteButton
-              :is-favorite="myFavorites(shop.id)" 
-              @changeFavorite="changeFavorite(myFavorites(shop.id), shop.id)"
+              :is-favorite="favoriteList(shop.id)"
+              :shop-id="shop.id"
+              :user-id="user_id"
+              @changeFavorite="changeFavorite(favoriteList(shop.id), shop.id)"
             />
+
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -59,7 +61,7 @@ export default {
       },
       filtering_list:{},
       favorites:[],
-      user_id:1,
+      user_id:this.$store.state.user_id,
     };
   },
   components:{
@@ -73,7 +75,7 @@ export default {
     this.getShopsData();
   },
   computed:{
-    myFavorites(){
+    favoriteList(){
       return function(shop_id){        
         return this.favorites.find((v)=> v.id === shop_id).is_favorite;
       }
@@ -95,16 +97,13 @@ export default {
   methods:{
     createFavoritesList(){
       this.favorites = [];
-      let is_favorite;
       for(let shop of this.all_shops){
         const favorites = shop.favorites;
         const is_exist_favorites = favorites.length > 0;
         const is_favorite_user = favorites.some((item) => item.pivot.user_id === this.user_id);
-        if(is_exist_favorites && is_favorite_user){
-          is_favorite = true;
-        }else{
-          is_favorite = false;
-        }
+
+        const is_favorite = is_exist_favorites && is_favorite_user;
+        
         const object = {
           id:shop.id,
           is_favorite:is_favorite,
@@ -113,25 +112,7 @@ export default {
       }
     },
     changeFavorite(is_favorite, shop_id){
-      const url = `http://127.0.0.1:8000/api/v1/shops/${shop_id}/favorites`;
       const index = this.favorites.findIndex((v)=> v.id === shop_id);
-      if(is_favorite){
-        axios({
-          method:"delete",
-          url:url,
-          data:{
-            user_id:this.user_id,
-          }
-        }).then((response)=>{
-          console.log(response);
-        });
-      }else{
-        axios
-          .put(url, {user_id:this.user_id})
-          .then((response)=>{
-            console.log(response);
-          });
-      }
       this.favorites.splice(index, 1, {id:shop_id, is_favorite:!is_favorite});
     },
     unfilter(item){
@@ -142,10 +123,14 @@ export default {
       }
       this.filtered_shops = this.getFilteredShops(this.filtering_list);
     },
+    resetFilter(){
+      this.filtering_list={};
+      this.filtered_shops = Object.assign({},this.all_shops);
+    },
     search(){
       this.filtering_list = Object.assign({},this.search_word_list);
       this.filtered_shops = this.getFilteredShops(this.search_word_list);
-      if(this.filtered_shops.length == 0){
+      if(this.filtered_shops.length === 0){
         alert("該当するお店がありませんでした。");
         this.resetFilter();
       }
@@ -173,14 +158,10 @@ export default {
         target_table.push(keyword);
       }
     },
-    resetFilter(){
-      this.filtering_list={};
-      this.filtered_shops = Object.assign({},this.all_shops);
-    },
     moveShop(shop_id){
       this.$router.push({
         path:'/detail/' + shop_id,
-        params:{id:shop_id},
+        params:{shop_id:shop_id}
       });
     }
   },
@@ -225,11 +206,6 @@ export default {
     margin:0 auto 15px auto;
     width: 100%;
   }
-  /* .item__button-favorite{
-    position: absolute;
-    right: 20px;
-    top: 20px;
-  } */
   .item__shop-name{
     font-family: 'Meiryo';
     font-size: 36px;

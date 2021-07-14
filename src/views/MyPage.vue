@@ -83,25 +83,25 @@ export default {
         data:"",
       },
       user_data:"",
-      id:1,
+      user_id:this.$store.state.user_id,
     };
   },
   methods:{
     async getReservationData(){
-      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}/reservations`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.user_id}/reservations`;
       const reservation_items = axios.get(url);
       const reservations = await reservation_items;
       this.reservation_table.data = reservations.data.data;
     },
     async getFavoritesData(){
-      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}/favorites`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.user_id}/favorites`;
       const favorite_items = axios.get(url);
       const favorites = await favorite_items;
       console.log("favorites=",favorites.data.data);
       this.favorite_table.data = favorites.data.data;
     },
     async getUserData(){
-      const url = `http://127.0.0.1:8000/api/v1/users/${this.id}`;
+      const url = `http://127.0.0.1:8000/api/v1/users/${this.user_id}`;
       const user_items = axios.get(url);
       const user = await user_items;
       this.user_data = user.data.data;
@@ -125,7 +125,7 @@ export default {
             method:"delete",
             url:`http://127.0.0.1:8000/api/v1/shops/${shop_id}/favorites`,
             data:{
-              user_id:this.id,
+              user_id:this.user_id,
             },
           })
           .then((response)=>{
