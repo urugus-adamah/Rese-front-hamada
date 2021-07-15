@@ -43,7 +43,8 @@
     methods:{
       auth(){
         if(this.isValidForm()){
-          this.$store.dispatch("login",{
+          this.$store.dispatch("login",
+          {
             email:this.email,
             password:this.password,
           });

@@ -10,7 +10,7 @@ export default new Vuex.Store({
   plugins: [createPresistedState()],
   state: {
     auth: "",
-    user_id:4,
+    user_id:"",
   },
   mutations: {
     auth(state, payload) {
@@ -25,36 +25,48 @@ export default new Vuex.Store({
   },
   actions: {
     async login({ commit }, { email, password}) {
-      const responseLogin = await axios.post(
-        "http://127.0.0.1:8000/api/v1/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
-      // const responseUser = await axios.get(
-      //   "http://127.0.0.1:8000/api/v1/users/"
-      //   );
-        
-      commit("auth", responseLogin.data.auth);
-      // commit("user", responseUser.data.id);
-      console.log(responseLogin);
-      // console.log(responseUser.data);
-      router.replace("/");
-    },
-    logout({ commit }) {
-      axios
-        .post("http://127.0.0.1:8000/api/v1/logout", {
-          auth: this.state.auth,
-        })
-        .then((response) => {
-          console.log(response);
-          commit("logout", response.data.auth);
-          router.replace("/");
+      const responseLogin = await axios
+        .post(
+          "http://127.0.0.1:8000/api/v1/login",{
+            email: email,
+            password: password,
         })
         .catch((error) => {
           console.log(error);
         });
+      const responseUser = await axios
+        .get(
+          "http://127.0.0.1:8000/api/v1/users/"
+          )
+        .then((response) => {
+          return response.data.data.find((v) => v.email === email);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log('responseUser', responseUser);
+      console.log('responseLogin', responseLogin);
+      if (responseUser && responseLogin) {
+        commit("userId", responseUser.id);
+        commit("auth", responseLogin.data.auth);
+        router.replace("/");
+      } else {
+        alert("メールアドレス、またはパスワードが違います。")
+      }
+    },
+    logout({ commit }) {
+      axios
+      .post("http://127.0.0.1:8000/api/v1/logout", {
+        auth: this.state.auth,
+        })
+      .then((response) => {
+        console.log(response);
+        commit("logout", response.data.auth);
+        router.replace("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     },
   },
   modules: {
