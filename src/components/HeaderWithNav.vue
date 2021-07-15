@@ -10,19 +10,22 @@
             <router-link :to="{path:'/mypage'}">マイページ</router-link>
           </li>
           <li>
-            <router-link :to="{path:'/login'}">ログアウト</router-link>
+            <router-link @click.native="logout" to="/">ログアウト</router-link>
           </li>
         </ul>
       </nav>
   </header>  
 </template>
 <script>
-// import Header from '../components/Header';
-// export default {
-//   components:{
-//     Header,
-//   }
-// }
+  export default {
+
+    methods:{
+      logout(){
+        this.$store.dispatch("logout");
+      },
+    }
+  };
+
 </script>
 <style scoped>
   .header {

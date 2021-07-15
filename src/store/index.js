@@ -44,8 +44,6 @@ export default new Vuex.Store({
         .catch((error) => {
           console.log(error);
         });
-      console.log('responseUser', responseUser);
-      console.log('responseLogin', responseLogin);
       if (responseUser && responseLogin) {
         commit("userId", responseUser.id);
         commit("auth", responseLogin.data.auth);
@@ -60,9 +58,8 @@ export default new Vuex.Store({
         auth: this.state.auth,
         })
       .then((response) => {
-        console.log(response);
         commit("logout", response.data.auth);
-        router.replace("/");
+        router.replace("/login");
       })
       .catch((error) => {
         console.log(error);
