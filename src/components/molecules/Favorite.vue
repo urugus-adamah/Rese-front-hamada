@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!-- <OnFavoriteButton class="button-favorite" v-if="is_favorite" @clicked="changeFavorite"/> -->
     <OnFavoriteButton class="button-favorite" v-if="is_favorite" @clicked="unfavorite"/>
-    <!-- <OffFavoriteButton @clicked="changeFavorite"  class="button-favorite" v-else/> -->
     <OffFavoriteButton @clicked="favorite"  class="button-favorite" v-else/>
   </div>
 </template>
@@ -47,10 +45,6 @@ export default {
       }).then((response)=>{
         console.log(response);
       });
-        // .put(this.url, {user_id:this.user_id})
-        // .then((response)=>{
-        //   console.log(response);
-        // });
       this.changeFavorite();
     },
     unfavorite(){
